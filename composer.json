@@ -23,7 +23,8 @@
     "repositories": {
         "php-di\\phpdoc-reader": {
             "type": "vcs",
-            "url": "https://github.com/feffel/PhpDocReader"
+            "url": "https://github.com/feffel/PhpDocReader",
+            "no-api" : true
         }
     },
     "require": {
