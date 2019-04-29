@@ -1,0 +1,9 @@
+{
+    "methodCalls": [
+        {
+            "class": "\\felfactory\\Factory",
+            "method": "generate",
+            "position": 0
+        }
+    ]
+}
