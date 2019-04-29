@@ -3,7 +3,7 @@
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
+[![Coverage Status][ico-coverage]][link-coverage]
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
@@ -68,14 +68,14 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-version]: https://img.shields.io/packagist/v/feffel/felfactory.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/com/feffel/felfactory/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/feffel/felfactory.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/feffel/felfactory.svg?style=flat-square
+[ico-coverage]: https://img.shields.io/codeclimate/coverage/feffel/felfactory.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/codeclimate/maintainability/feffel/felfactory.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/feffel/felfactory.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/feffel/felfactory
 [link-travis]: https://travis-ci.com/feffel/felfactory
-[link-scrutinizer]: https://scrutinizer-ci.com/g/feffel/felfactory/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/feffel/felfactory
+[link-coverage]: https://codeclimate.com/github/feffel/felfactory/test_coverage
+[link-code-quality]: https://codeclimate.com/github/feffel/felfactory/maintainability
 [link-downloads]: https://packagist.org/packages/feffel/felfactory
 [link-author]: https://github.com/feffel
 [link-contributors]: ../../contributors
