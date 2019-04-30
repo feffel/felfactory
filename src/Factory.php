@@ -26,12 +26,15 @@ class Factory
     protected $generator;
     /** @var Guesser */
     protected $guesser;
+    /** @var ConfigParser */
+    protected $parser;
 
     public function __construct(Generator $generator = null)
     {
         $this->reader       = new Reader();
         $this->configLoader = new ConfigLoader();
         $this->generator    = $generator ?? \Faker\Factory::create();
+        $this->parser       = new ConfigParser($this->generator);
         $this->guesser      = new Guesser($this->generator);
     }
 
@@ -45,7 +48,7 @@ class Factory
         $properties = $this->reader->readProperties($className);
         $config     = $this->configLoader->load($className)($this->generator);
         foreach ($config as $propertyName => $callable) {
-            $properties[$propertyName]->callback = $callable;
+            $properties[$propertyName]->callback = $this->parser->parse($callable);
         }
         /** @var Property[] $nonConfiguredProperties */
         $nonConfiguredProperties = array_filter(
