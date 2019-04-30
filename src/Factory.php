@@ -46,7 +46,7 @@ class Factory
     protected function configure($className): array
     {
         $properties = $this->reader->readProperties($className);
-        $config     = $this->configLoader->load($className)($this->generator);
+        $config     = $this->configLoader->load($className);
         foreach ($config as $propertyName => $callable) {
             $properties[$propertyName]->callback = $this->parser->parse($callable);
         }

@@ -14,8 +14,6 @@ class ConfigLoader
 
     protected static $configs = [];
 
-    protected static $noConfig;
-
     protected static $rootNamespace;
 
     protected static $initiated = false;
@@ -26,7 +24,7 @@ class ConfigLoader
             return;
         }
         $this->loadNamespace();
-        $classes = ClassFinder::getClassesInNamespace(self::$rootNamespace);
+        $classes       = ClassFinder::getClassesInNamespace(self::$rootNamespace);
         $configClasses = array_filter(
             $classes,
             static function ($className) {
@@ -40,11 +38,9 @@ class ConfigLoader
             } else {
                 $key = $configClass;
             }
-            self::$configs[$key] = [$configClass, 'config'];
+            /** @noinspection PhpUndefinedMethodInspection */
+            self::$configs[$key] = $configClass::config();
         }
-        self::$noConfig  = static function () {
-            return [];
-        };
         self::$initiated = true;
     }
 
@@ -59,14 +55,8 @@ class ConfigLoader
         self::$rootNamespace = $namespace;
     }
 
-    public function load(string $className): callable
+    public function load(string $className): array
     {
-        if (!isset(self::$configs[$className])) {
-            $config = self::$noConfig;
-        } else {
-            $config = self::$configs[$className];
-        }
-
-        return $config;
+        return self::$configs[$className] ?? [];
     }
 }
