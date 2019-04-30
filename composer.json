@@ -2,14 +2,7 @@
     "name": "feffel/felfactory",
     "type": "library",
     "description": "",
-    "keywords": [
-        "feffel",
-        "felfactory",
-        "faker",
-        "generation",
-        "data",
-        "model"
-    ],
+    "keywords": ["felfactory", "faker", "generation", "data", "fixtures"],
     "homepage": "https://github.com/feffel/felfactory",
     "license": "MIT",
     "authors": [

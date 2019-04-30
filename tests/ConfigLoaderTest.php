@@ -45,7 +45,7 @@ class ConfigLoaderTest extends TestCase
         // ASSERT
         $this->assertIsArray($config);
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($config));
-        $this->assertIsCallable($config['firstName']);
+        $this->assertIsString($config['firstName']);
     }
 
     public function testReadEmbeddedConfigClass(): void
@@ -58,6 +58,6 @@ class ConfigLoaderTest extends TestCase
         // ASSERT
         $this->assertIsArray($config);
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($config));
-        $this->assertIsCallable($config['firstName']);
+        $this->assertIsString($config['firstName']);
     }
 }

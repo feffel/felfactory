@@ -20,9 +20,9 @@ class SimpleEmbeddedModel implements EmbeddedConfig
     public static function config(Generator $generator): array
     {
         return [
-            'firstName' => function() use ($generator) {return $generator->firstName;},
-            'lastName'  => function() use ($generator) {return $generator->lastName;},
-            'age'       => function() use ($generator) {return $generator->numberBetween(18, 59);},
+            'firstName' => 'firstName',
+            'lastName'  => 'lastName',
+            'age'       => 'numberBetween(18, 59)',
         ];
     }
 }
