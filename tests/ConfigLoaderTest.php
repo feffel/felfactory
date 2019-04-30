@@ -27,9 +27,8 @@ class ConfigLoaderTest extends TestCase
     {
         // SETUP
         $loader    = new ConfigLoader();
-        $generator = Factory::create();
         // TEST
-        $config = $loader->load(EmptyTestModel::class)($generator);
+        $config = $loader->load(EmptyTestModel::class);
         // ASSERT
         $this->assertIsArray($config);
         $this->assertEmpty($config);
@@ -39,9 +38,8 @@ class ConfigLoaderTest extends TestCase
     {
         // SETUP
         $loader    = new ConfigLoader();
-        $generator = Factory::create();
         // TEST
-        $config = $loader->load(SimpleTestModel::class)($generator);
+        $config = $loader->load(SimpleTestModel::class);
         // ASSERT
         $this->assertIsArray($config);
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($config));
@@ -52,9 +50,8 @@ class ConfigLoaderTest extends TestCase
     {
         // SETUP
         $loader    = new ConfigLoader();
-        $generator = Factory::create();
         // TEST
-        $config = $loader->load(SimpleEmbeddedModel::class)($generator);
+        $config = $loader->load(SimpleEmbeddedModel::class);
         // ASSERT
         $this->assertIsArray($config);
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($config));

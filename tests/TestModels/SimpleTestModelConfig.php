@@ -8,7 +8,7 @@ use felfactory\Interfaces\StandaloneConfig;
 
 class SimpleTestModelConfig implements StandaloneConfig
 {
-    public static function config(Generator $generator): array
+    public static function config(): array
     {
         return [
             'firstName' => 'firstName',

@@ -17,7 +17,7 @@ class SimpleEmbeddedModel implements EmbeddedConfig
     /** @var int */
     private $age;
 
-    public static function config(Generator $generator): array
+    public static function config(): array
     {
         return [
             'firstName' => 'firstName',

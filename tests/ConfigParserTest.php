@@ -7,6 +7,11 @@ use Faker\Factory;
 use felfactory\ConfigParser;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class ConfigParserTest
+ * @covers \felfactory\ConfigParser
+ * @package felfactory\tests
+ */
 class ConfigParserTest extends TestCase
 {
     public function testFunctionNoArgsNoParentheses(): void
