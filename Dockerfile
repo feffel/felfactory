@@ -11,8 +11,4 @@ RUN pecl install xdebug \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
-RUN wget https://psysh.org/psysh && \
-    chmod +x psysh && \
-    mv psysh /usr/local/bin/psysh
-
 WORKDIR '/app'

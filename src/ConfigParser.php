@@ -1,4 +1,6 @@
 <?php
+/** @noinspection OnlyWritesOnParameterInspection */
+/** @noinspection PhpUnusedLocalVariableInspection */
 declare(strict_types=1);
 
 namespace felfactory;
@@ -7,6 +9,8 @@ use Faker\Generator;
 
 class ConfigParser
 {
+    protected const CALL_FORMAT = 'return $generator->%s;';
+
     /** @var Generator */
     protected $generator;
 
@@ -17,6 +21,10 @@ class ConfigParser
 
     public function parse(string $func): callable
     {
-        $this->generator->firstName();
+        $generator = $this->generator;
+
+        return static function () use ($generator, $func) {
+            return eval(sprintf(self::CALL_FORMAT, $func));
+        };
     }
 }
