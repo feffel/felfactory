@@ -4,7 +4,6 @@ env:
     global:
         - CC_TEST_REPORTER_ID=645ecdff29a40f351cdc725b83bd8fd5f88828be3994b01612d065fff0e06dd1
 php:
-    - 7.1
     - 7.2
     - 7.3
 
@@ -20,7 +19,7 @@ cache:
 before_script:
     - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
     - chmod +x ./cc-test-reporter
-    - if [ $(phpenv version-name) = "7.1" ]; then ./cc-test-reporter before-build; fi
+    - if [ $(phpenv version-name) = "7.3" ]; then ./cc-test-reporter before-build; fi
     - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-dist
 
 script:
@@ -30,6 +29,6 @@ script:
 
 after_script:
     - |
-        if [ $(phpenv version-name) = "7.1" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ];
+        if [ $(phpenv version-name) = "7.3" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ];
         then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT;
         fi

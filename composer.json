@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": "~7.1",
+        "php": "~7.2",
         "fzaninotto/faker": "^1.8",
         "haydenpierce/class-finder": "^0.3.1",
         "php-di/phpdoc-reader": "dev-master",
