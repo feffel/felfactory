@@ -20,6 +20,7 @@ class Reader
     /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * @param string $className
+     * @psalm-param class-string $className
      *
      * @return Property[]
      */
@@ -30,7 +31,7 @@ class Reader
         $properties           = [];
         foreach ($reflectionProperties as $reflectionProperty) {
             $reflectionProperty->setAccessible(true);
-            $property                    = Property::fromReflection(
+            $property                    = new Property(
                 $reflectionProperty,
                 $this->reader->getPropertyClass($reflectionProperty)
             );

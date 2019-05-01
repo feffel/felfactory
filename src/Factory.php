@@ -39,11 +39,11 @@ class Factory
     }
 
     /**
-     * @param $className
-     *
+     * @param string $className
+     * @psalm-param class-string $className
      * @return Property[]
      */
-    protected function configure($className): array
+    protected function configure(string $className): array
     {
         $properties = $this->reader->readProperties($className);
         $config     = $this->configLoader->load($className);
@@ -53,16 +53,17 @@ class Factory
         /** @var Property[] $nonConfiguredProperties */
         $nonConfiguredProperties = array_filter(
             $properties,
-            static function (Property $property) {
+            static function (Property $property): bool {
                 return $property->callback === null;
             }
         );
         foreach ($nonConfiguredProperties as $property) {
-            if ($property->type === null) {
+            $type = $property->type;
+            if ($type === null) {
                 $property->callback = $this->guesser->guess($property);
             } else {
-                $property->callback = function () use ($property) {
-                    return $this->generate($property->type);
+                $property->callback = function () use ($type): object {
+                    return $this->generate($type);
                 };
             }
         }
@@ -71,8 +72,20 @@ class Factory
     }
 
     /**
+     * @param callable|null $callback
+     * @return mixed|null
+     */
+    protected function evaluateCallback(?callable $callback)
+    {
+        if ($callback) {
+            return $callback();
+        }
+
+        return null;
+    }
+
+    /**
      * @param string $className
-     *
      * @return object
      * @throws ReflectionException
      */
@@ -85,7 +98,7 @@ class Factory
         $class  = new \ReflectionClass($className);
         $obj    = $class->newInstance();
         foreach ($config as $property) {
-            $val = ($property->callback)();
+            $val = $this->evaluateCallback($property->callback);
             $property->ref->setValue($obj, $val);
         }
 

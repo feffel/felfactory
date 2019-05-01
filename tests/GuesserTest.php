@@ -25,7 +25,7 @@ class GuesserTest extends TestCase
         $name    = m::mock(Name::class);
         $name->allows('guessFormat')->andReturnNull();
         ReflectionHelper::set($guesser, 'nameGuesser', $name);
-        $property = new Property();
+        $property = m::mock(Property::class);
         // TEST
         $callback = $guesser->guess($property);
         // ASSERT

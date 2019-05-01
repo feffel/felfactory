@@ -12,10 +12,11 @@ class ConfigLoader
 {
     protected const NAMESPACE_VARIABLE = 'ROOT_NAMESPACE';
 
+    /** @var array[] */
     protected static $configs = [];
-
+    /** @var string */
     protected static $rootNamespace;
-
+    /** @var bool */
     protected static $initiated = false;
 
     public function __construct()
@@ -27,7 +28,7 @@ class ConfigLoader
         $classes       = ClassFinder::getClassesInNamespace(self::$rootNamespace);
         $configClasses = array_filter(
             $classes,
-            static function ($className) {
+            static function (string $className): bool {
                 return is_subclass_of($className, FactoryConfig::class);
             }
         );
@@ -47,7 +48,7 @@ class ConfigLoader
     protected function loadNamespace(): void
     {
         $namespace = getenv(self::NAMESPACE_VARIABLE);
-        if ($namespace === null) {
+        if (!$namespace) {
             $dotenv = Dotenv::create(__DIR__.'/../../../');
             $dotenv->load();
             $namespace = getenv(self::NAMESPACE_VARIABLE);

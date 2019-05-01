@@ -15,12 +15,12 @@ use ReflectionProperty;
  */
 class PropertyTest extends TestCase
 {
-    public function testFromReflection(): void
+    public function testConstruction(): void
     {
         // SETUP
         $refProperty = new ReflectionProperty(SimpleTestModel::class, 'firstName');
         // TEST
-        $property = Property::fromReflection($refProperty);
+        $property = new Property($refProperty);
         // ASSERT
         $this->assertEquals($refProperty->getName(), $property->name);
         $this->assertEquals(null, $property->type);

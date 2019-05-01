@@ -7,25 +7,22 @@ use ReflectionProperty;
 
 class Property
 {
+    public function __construct(ReflectionProperty $refProperty, ?string $type = null)
+    {
+        $this->name = $refProperty->getName();
+        $this->ref  = $refProperty;
+        $this->type = $type;
+    }
+
     /** @var string */
     public $name;
 
-    /** @var string */
+    /** @var ?string */
     public $type;
 
     /** @var ReflectionProperty */
     public $ref;
 
-    /** @var string */
+    /** @var ?callable */
     public $callback;
-
-    public static function fromReflection(ReflectionProperty $refProperty, string $type = null): self
-    {
-        $property       = new self();
-        $property->name = $refProperty->getName();
-        $property->ref  = $refProperty;
-        $property->type = $type;
-
-        return $property;
-    }
 }
