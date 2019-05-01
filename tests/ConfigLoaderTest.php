@@ -4,16 +4,15 @@ declare(strict_types=1);
 namespace felfactory\tests;
 
 use Dotenv\Dotenv;
-use Faker\Factory;
 use felfactory\ConfigLoader;
 use felfactory\tests\TestModels\EmptyTestModel;
 use felfactory\tests\TestModels\SimpleEmbeddedModel;
-use felfactory\tests\TestModels\SimpleTestModel;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigLoaderTest
- * @covers \felfactory\ConfigLoader
+ *
+ * @covers  \felfactory\ConfigLoader
  * @package felfactory\tests
  */
 class ConfigLoaderTest extends TestCase
@@ -26,7 +25,7 @@ class ConfigLoaderTest extends TestCase
     public function testReadNoConfigClass(): void
     {
         // SETUP
-        $loader    = new ConfigLoader();
+        $loader = new ConfigLoader();
         // TEST
         $config = $loader->load(EmptyTestModel::class);
         // ASSERT
@@ -34,22 +33,10 @@ class ConfigLoaderTest extends TestCase
         $this->assertEmpty($config);
     }
 
-    public function testReadStandaloneConfigClass(): void
-    {
-        // SETUP
-        $loader    = new ConfigLoader();
-        // TEST
-        $config = $loader->load(SimpleTestModel::class);
-        // ASSERT
-        $this->assertIsArray($config);
-        $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($config));
-        $this->assertIsString($config['firstName']);
-    }
-
     public function testReadEmbeddedConfigClass(): void
     {
         // SETUP
-        $loader    = new ConfigLoader();
+        $loader = new ConfigLoader();
         // TEST
         $config = $loader->load(SimpleEmbeddedModel::class);
         // ASSERT

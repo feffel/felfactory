@@ -4,8 +4,7 @@ declare(strict_types=1);
 namespace felfactory;
 
 use Dotenv\Dotenv;
-use felfactory\Interfaces\FactoryConfig;
-use felfactory\Interfaces\StandaloneConfig;
+use felfactory\Interfaces\EmbeddedConfig;
 use HaydenPierce\ClassFinder\ClassFinder;
 
 class ConfigLoader
@@ -29,24 +28,18 @@ class ConfigLoader
         $configClasses = array_filter(
             $classes,
             static function (string $className): bool {
-                return is_subclass_of($className, FactoryConfig::class);
+                return is_subclass_of($className, EmbeddedConfig::class);
             }
         );
         foreach ($configClasses as $configClass) {
-            if (is_subclass_of($configClass, StandaloneConfig::class)) {
-                /** @noinspection PhpUndefinedMethodInspection */
-                $key = $configClass::dataClass();
-            } else {
-                $key = $configClass;
-            }
-            /** @noinspection PhpUndefinedMethodInspection */
-            self::$configs[$key] = $configClass::config();
+            self::$configs[$configClass] = $configClass::config();
         }
         self::$initiated = true;
     }
 
     protected function loadNamespace(): void
     {
+        // @TODO Replace this with proper configs
         $namespace = getenv(self::NAMESPACE_VARIABLE);
         if (!$namespace) {
             $dotenv = Dotenv::create(__DIR__.'/../../../');
