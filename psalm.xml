@@ -49,5 +49,6 @@
         <RawObjectIteration errorLevel="info" />
 
         <InvalidStringClass errorLevel="info" />
+        <ReservedWord errorLevel="suppress"/>
     </issueHandlers>
 </psalm>

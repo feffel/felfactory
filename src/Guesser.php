@@ -18,8 +18,7 @@ class Guesser
     public function __construct(Generator $generator)
     {
         $this->nameGuesser = new Name($generator);
-        self::$nullProperty = static function () {
-            return null;
+        self::$nullProperty = static function (): void {
         };
     }
 
