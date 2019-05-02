@@ -16,8 +16,9 @@ class ConfigLoader
         if (self::$initiated) {
             return;
         }
+        $phpConfigs       = (new PhpLoader())->discover();
         $namespaceConfigs = (new NamespaceLoader())->discover();
-        self::$configs    = $namespaceConfigs;
+        self::$configs    = array_merge($phpConfigs, $namespaceConfigs);
         self::$initiated  = true;
     }
 

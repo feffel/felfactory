@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 class GuesserTest extends TestCase
 {
 
-    public function testNullCallableOnUnknown(): void
+    public function testNullOnUnknown(): void
     {
         // SETUP
         $guesser = new Guesser(\Faker\Factory::create());
@@ -29,8 +29,6 @@ class GuesserTest extends TestCase
         // TEST
         $callback = $guesser->guess($property);
         // ASSERT
-        $this->assertIsCallable($callback);
-        $this->assertNull($callback());
+        $this->assertNull($callback);
     }
-
 }

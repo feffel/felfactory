@@ -18,7 +18,7 @@ class PhpLoaderTest extends TestCase
     public function testLoadPhpConfig(): void
     {
         // SETUP
-        $filePath = __DIR__.'/../TestModels/conf.php';
+        $filePath = __DIR__.'/../TestModels/confs/conf.php';
         putenv("CONFIG_FILE=$filePath");
         $loader = new PhpLoader();
         // TEST
@@ -29,24 +29,12 @@ class PhpLoaderTest extends TestCase
         $this->assertEquals(['firstName', 'lastName'], array_keys($configs[SimpleEmbeddedModel::class]));
     }
 
-    public function testEmptyOnFileDoesNotExist(): void
-    {
-        // SETUP
-        $filePath = __DIR__.'../TestModels/lol.text';
-        putenv("CONFIG_FILE=$filePath");
-        $loader = new PhpLoader();
-        // TEST
-        $configs = $loader->discover();
-        // ASSERT
-        $this->assertEmpty($configs);
-    }
-
     public function invalidConf(): array
     {
         return [
-            'DoesNotExist'       => [__DIR__.'/../TestModels/lol.text'],
-            'ReturnInvalidArray' => [__DIR__.'/../TestModels/invalid_conf.php'],
-            'NoReturn'           => [__DIR__.'/../TestModels/invalid_conf2.php'],
+            'DoesNotExist'       => [__DIR__.'/../TestModels/confs/lol.text'],
+            'ReturnInvalidArray' => [__DIR__.'/../TestModels/confs/invalid_conf.php'],
+            'NoReturn'           => [__DIR__.'/../TestModels/confs/invalid_conf2.php'],
         ];
     }
 
@@ -54,7 +42,7 @@ class PhpLoaderTest extends TestCase
      * @dataProvider invalidConf
      * @param string $filePath
      */
-    public function testEmptyOnInvalidConfigFormat(string $filePath): void
+    public function testEmptyOnInvalidConfig(string $filePath): void
     {
         // SETUP
         putenv("CONFIG_FILE=$filePath");

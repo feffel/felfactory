@@ -22,8 +22,8 @@ class Guesser
         };
     }
 
-    public function guess(Property $property): callable
+    public function guess(Property $property): ?callable
     {
-        return $this->nameGuesser->guessFormat($property->name) ?? self::$nullProperty;
+        return $this->nameGuesser->guessFormat($property->name);
     }
 }
