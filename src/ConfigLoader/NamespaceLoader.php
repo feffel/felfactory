@@ -9,12 +9,11 @@ use HaydenPierce\ClassFinder\ClassFinder;
 
 class NamespaceLoader
 {
-    protected const NAMESPACE_VARIABLE = 'ROOT_NAMESPACE';
-
+    /** @deprecated  */
     protected function getNamespace(): string
     {
         // @TODO Replace this with proper configs
-        return getenv(self::NAMESPACE_VARIABLE) ?: '';
+        return getenv('ROOT_NAMESPACE') ?: '';
     }
 
     /**

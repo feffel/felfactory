@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace felfactory\tests;
 
-use Dotenv\Dotenv;
 use felfactory\ConfigLoader\NamespaceLoader;
 use felfactory\tests\TestModels\SimpleEmbeddedModel;
 use PHPUnit\Framework\TestCase;

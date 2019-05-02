@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace felfactory\tests;
 
-use Dotenv\Dotenv;
 use felfactory\Factory;
 use felfactory\tests\TestModels\EmptyTestModel;
 use felfactory\tests\TestModels\NestedTestModel;
@@ -20,7 +19,7 @@ class FactoryTest extends TestCase
 {
     protected function setUp(): void
     {
-        Dotenv::create(__DIR__)->load();
+        putenv('ROOT_NAMESPACE=felfactory\tests\TestModels');
     }
 
     public function testNonExistentClass(): void
