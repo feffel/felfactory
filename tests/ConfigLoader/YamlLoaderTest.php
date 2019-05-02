@@ -8,9 +8,8 @@ use felfactory\tests\TestModels\SimpleEmbeddedModel;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class PhpLoaderTest
- *
- * @covers  \felfactory\ConfigLoader\PhpLoader
+ * Class YamlLoaderTest
+ * @covers \felfactory\ConfigLoader\YamlLoader
  * @package felfactory\tests
  */
 class YamlLoaderTest extends TestCase

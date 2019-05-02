@@ -1,6 +1,6 @@
 
 felfactory\tests\TestModels\DoesNotExist:
-    - firstName: 'firstName'
-    - lastName: 'lastName'
+    firstName: 'firstName'
+    lastName: 'lastName'
 
 felfactory\tests\TestModels\SimpleEmbeddedModel: 5
