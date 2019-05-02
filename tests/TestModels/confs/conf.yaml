@@ -1,4 +1,4 @@
-
 felfactory\tests\TestModels\SimpleTestModelYamlConfig:
     firstName: 'firstName'
     lastName: 'lastName'
+    age: 'numberBetween(18, 59)'

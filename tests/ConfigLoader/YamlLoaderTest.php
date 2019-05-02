@@ -25,7 +25,7 @@ class YamlLoaderTest extends TestCase
         // ASSERT
         $this->assertEquals([SimpleTestModelYamlConfig::class], array_keys($configs));
         $this->assertIsArray($configs[SimpleTestModelYamlConfig::class]);
-        $this->assertEquals(['firstName', 'lastName'], array_keys($configs[SimpleTestModelYamlConfig::class]));
+        $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($configs[SimpleTestModelYamlConfig::class]));
     }
 
     public function invalidConf(): array

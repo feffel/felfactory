@@ -26,7 +26,7 @@ class PhpLoaderTest extends TestCase
         // ASSERT
         $this->assertEquals([SimpleTestModelPhpConfig::class], array_keys($configs));
         $this->assertIsArray($configs[SimpleTestModelPhpConfig::class]);
-        $this->assertEquals(['firstName', 'lastName'], array_keys($configs[SimpleTestModelPhpConfig::class]));
+        $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($configs[SimpleTestModelPhpConfig::class]));
     }
 
     public function invalidConf(): array
