@@ -1,0 +1,4 @@
+
+felfactory\tests\TestModels\SimpleEmbeddedModel:
+    - firstName: 'firstName'
+    - lastName: 'lastName'
