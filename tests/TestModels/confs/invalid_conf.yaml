@@ -3,4 +3,4 @@ felfactory\tests\TestModels\DoesNotExist:
     firstName: 'firstName'
     lastName: 'lastName'
 
-felfactory\tests\TestModels\SimpleEmbeddedModel: 5
+felfactory\tests\TestModels\SimpleTestModelYamlConfig: 5

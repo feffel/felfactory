@@ -6,6 +6,8 @@ namespace felfactory\tests;
 use felfactory\ConfigLoader\ConfigLoader;
 use felfactory\tests\TestModels\NestedTestModel;
 use felfactory\tests\TestModels\SimpleEmbeddedModel;
+use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
+use felfactory\tests\TestModels\SimpleTestModelYamlConfig;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,8 +21,10 @@ class ConfigLoaderTest extends TestCase
     protected function setUp(): void
     {
         putenv('ROOT_NAMESPACE=felfactory\tests\TestModels');
-        $filePath = __DIR__.'/../TestModels/confs/conf.php';
-        putenv("CONFIG_FILE=$filePath");
+        $phpFile = __DIR__.'/../TestModels/confs/conf.php';
+        putenv("CONFIG_FILE=$phpFile");
+        $yamlFile = __DIR__.'/../TestModels/confs/conf.yaml';
+        putenv("YAML_FILE=$yamlFile");
     }
 
     public function testLoaderConfigs(): void
@@ -43,8 +47,22 @@ class ConfigLoaderTest extends TestCase
         putenv('CONFIG_FILE');
         $loader = new ConfigLoader();
         // TEST
-        $conf      = $loader->load(SimpleEmbeddedModel::class);
+        $conf = $loader->load(SimpleEmbeddedModel::class);
         // ASSERT
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($conf));
+    }
+
+    public function testLoadsAllConfigsInOrder(): void
+    {
+        // SETUP
+        $loader = new ConfigLoader();
+        // TEST
+        $configs = ReflectionHelper::get($loader, 'configs');
+        // ASSERT
+        $this->assertEquals([
+            SimpleTestModelYamlConfig::class,
+            SimpleTestModelPhpConfig::class,
+            SimpleEmbeddedModel::class,
+        ], array_keys($configs));
     }
 }

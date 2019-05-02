@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace felfactory\tests;
 
 use felfactory\ConfigLoader\YamlLoader;
-use felfactory\tests\TestModels\SimpleEmbeddedModel;
+use felfactory\tests\TestModels\SimpleTestModelYamlConfig;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,9 +23,9 @@ class YamlLoaderTest extends TestCase
         // TEST
         $configs = $loader->discover();
         // ASSERT
-        $this->assertEquals([SimpleEmbeddedModel::class], array_keys($configs));
-        $this->assertIsArray($configs[SimpleEmbeddedModel::class]);
-        $this->assertEquals(['firstName', 'lastName'], array_keys($configs[SimpleEmbeddedModel::class]));
+        $this->assertEquals([SimpleTestModelYamlConfig::class], array_keys($configs));
+        $this->assertIsArray($configs[SimpleTestModelYamlConfig::class]);
+        $this->assertEquals(['firstName', 'lastName'], array_keys($configs[SimpleTestModelYamlConfig::class]));
     }
 
     public function invalidConf(): array

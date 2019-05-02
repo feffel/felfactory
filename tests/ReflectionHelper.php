@@ -12,4 +12,13 @@ class ReflectionHelper
         $prop->setAccessible(true);
         $prop->setValue($obj, $value);
     }
+
+    public static function get($obj, string $prop)
+    {
+        $reflection = new \ReflectionClass($obj);
+        $prop       = $reflection->getProperty($prop);
+        $prop->setAccessible(true);
+
+        return $prop->getValue($obj);
+    }
 }

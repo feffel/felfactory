@@ -1,7 +1,6 @@
 <?php
 
-use felfactory\tests\TestModels\SimpleEmbeddedModel;
 
 return [
-    SimpleEmbeddedModel::class => 5,
+    \felfactory\tests\TestModels\SimpleTestModelPhpConfig::class => 5,
 ];

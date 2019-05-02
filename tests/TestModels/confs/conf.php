@@ -1,9 +1,9 @@
 <?php
 
-use felfactory\tests\TestModels\SimpleEmbeddedModel;
+use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
 
 return [
-    SimpleEmbeddedModel::class => [
+    SimpleTestModelPhpConfig::class => [
         'firstName' => 'firstName',
         'lastName'  => 'lastName',
     ],
