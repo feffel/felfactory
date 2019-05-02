@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace felfactory;
 
 use Faker\Generator;
+use felfactory\ConfigLoader\ConfigLoader;
 use felfactory\Models\Property;
 use InvalidArgumentException;
 use ReflectionException;
