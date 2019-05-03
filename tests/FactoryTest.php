@@ -21,7 +21,10 @@ class FactoryTest extends TestCase
 {
     protected function setUp(): void
     {
-        putenv('ROOT_NAMESPACE=felfactory\tests\TestModels');
+        $phpFile  = __DIR__.'/TestModels/confs/conf.php';
+        $yamlFile = __DIR__.'/TestModels/confs/conf.yaml';
+        putenv("CONFIG_FILE=$phpFile");
+        putenv("YAML_FILE=$yamlFile");
     }
 
     public function testNonExistentClass(): void

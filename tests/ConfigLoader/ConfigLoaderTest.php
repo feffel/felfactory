@@ -5,6 +5,7 @@ namespace felfactory\tests;
 
 use felfactory\ConfigLoader\ConfigLoader;
 use felfactory\tests\TestModels\NestedTestModel;
+use felfactory\tests\TestModels\SimpleAnnotatedModel;
 use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
 use felfactory\tests\TestModels\SimpleTestModelYamlConfig;
 use PHPUnit\Framework\TestCase;
@@ -19,7 +20,7 @@ class ConfigLoaderTest extends TestCase
 {
     protected function setUp(): void
     {
-        $phpFile = __DIR__.'/../TestModels/confs/conf.php';
+        $phpFile  = __DIR__.'/../TestModels/confs/conf.php';
         $yamlFile = __DIR__.'/../TestModels/confs/conf.yaml';
         putenv("CONFIG_FILE=$phpFile");
         putenv("YAML_FILE=$yamlFile");
@@ -50,16 +51,45 @@ class ConfigLoaderTest extends TestCase
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($conf));
     }
 
-    public function testLoadsAllConfigsInOrder(): void
+    public function testAnnotationConfCached(): void
     {
         // SETUP
         $loader = new ConfigLoader();
         // TEST
-        $configs = ReflectionHelper::get($loader, 'configs');
+        $loader->load(SimpleAnnotatedModel::class);
         // ASSERT
-        $this->assertEquals([
-            SimpleTestModelYamlConfig::class,
-            SimpleTestModelPhpConfig::class,
-        ], array_keys($configs));
+        $configs = ReflectionHelper::get($loader, 'configs');
+        $this->assertArrayHasKey(SimpleAnnotatedModel::class, $configs);
+    }
+
+    public function testLoadsAllConfigsInOrder(): void
+    {
+        // TEST
+        $loader = new ConfigLoader();
+        // ASSERT
+        $configs = ReflectionHelper::get($loader, 'configs');
+        $this->assertEquals(
+            [
+                SimpleTestModelYamlConfig::class,
+                SimpleTestModelPhpConfig::class,
+            ],
+            array_keys($configs)
+        );
+    }
+
+    public function testLoadedFromAnnotation(): void
+    {
+        // SETUP
+        $loader = new ConfigLoader();
+        // TEST
+        $conf = $loader->load(SimpleAnnotatedModel::class);
+        // ASSERT
+        $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($conf));
+    }
+
+    protected function tearDown(): void
+    {
+        ReflectionHelper::set(ConfigLoader::class, 'configs', []);
+        ReflectionHelper::set(ConfigLoader::class, 'initiated', false);
     }
 }
