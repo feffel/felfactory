@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class YamlLoaderTest
+ *
  * @covers \felfactory\ConfigLoader\YamlLoader
  * @package felfactory\tests
  */

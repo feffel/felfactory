@@ -9,6 +9,12 @@ use felfactory\tests\TestModels\SimpleInvalidAnnotationTestModel;
 use felfactory\tests\TestModels\SimpleTestModel;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class AnnotationLoaderTest
+ *
+ * @covers \felfactory\ConfigLoader\AnnotationLoader
+ * @package felfactory\tests
+ */
 class AnnotationLoaderTest extends TestCase
 {
     public function testLoadAnnotatedClass(): void

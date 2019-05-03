@@ -18,8 +18,7 @@ class ConfigLoader
         }
         $yamlConfigs      = (new YamlLoader())->discover();
         $phpConfigs       = (new PhpLoader())->discover();
-        $namespaceConfigs = (new NamespaceLoader())->discover();
-        self::$configs    = array_merge($yamlConfigs, $phpConfigs, $namespaceConfigs);
+        self::$configs    = array_merge($yamlConfigs, $phpConfigs);
         self::$initiated  = true;
     }
 

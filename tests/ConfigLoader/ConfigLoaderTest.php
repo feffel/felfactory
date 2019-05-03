@@ -5,7 +5,6 @@ namespace felfactory\tests;
 
 use felfactory\ConfigLoader\ConfigLoader;
 use felfactory\tests\TestModels\NestedTestModel;
-use felfactory\tests\TestModels\SimpleEmbeddedModel;
 use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
 use felfactory\tests\TestModels\SimpleTestModelYamlConfig;
 use PHPUnit\Framework\TestCase;
@@ -20,10 +19,9 @@ class ConfigLoaderTest extends TestCase
 {
     protected function setUp(): void
     {
-        putenv('ROOT_NAMESPACE=felfactory\tests\TestModels');
         $phpFile = __DIR__.'/../TestModels/confs/conf.php';
-        putenv("CONFIG_FILE=$phpFile");
         $yamlFile = __DIR__.'/../TestModels/confs/conf.yaml';
+        putenv("CONFIG_FILE=$phpFile");
         putenv("YAML_FILE=$yamlFile");
     }
 
@@ -32,7 +30,7 @@ class ConfigLoaderTest extends TestCase
         // SETUP
         $loader = new ConfigLoader();
         // TEST
-        $conf      = $loader->load(SimpleEmbeddedModel::class);
+        $conf      = $loader->load(SimpleTestModelPhpConfig::class);
         $emptyConf = $loader->load(NestedTestModel::class);
         // ASSERT
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($conf));
@@ -47,7 +45,7 @@ class ConfigLoaderTest extends TestCase
         putenv('CONFIG_FILE');
         $loader = new ConfigLoader();
         // TEST
-        $conf = $loader->load(SimpleEmbeddedModel::class);
+        $conf = $loader->load(SimpleTestModelPhpConfig::class);
         // ASSERT
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($conf));
     }
@@ -62,7 +60,6 @@ class ConfigLoaderTest extends TestCase
         $this->assertEquals([
             SimpleTestModelYamlConfig::class,
             SimpleTestModelPhpConfig::class,
-            SimpleEmbeddedModel::class,
         ], array_keys($configs));
     }
 }

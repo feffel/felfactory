@@ -9,7 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * Class ConfigParserTest
- * @covers \felfactory\ConfigParser
+ *
+ * @covers  \felfactory\ConfigParser
  * @package felfactory\tests
  */
 class ConfigParserTest extends TestCase

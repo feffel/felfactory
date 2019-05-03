@@ -6,8 +6,8 @@ namespace felfactory\tests;
 use felfactory\Factory;
 use felfactory\tests\TestModels\EmptyTestModel;
 use felfactory\tests\TestModels\NestedTestModel;
-use felfactory\tests\TestModels\SimpleEmbeddedModel;
 use felfactory\tests\TestModels\SimpleTestModel;
+use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -55,14 +55,14 @@ class FactoryTest extends TestCase
         $this->assertIsString($obj->firstName);
     }
 
-    public function testSimpleEmbeddedModel(): void
+    public function testConfiguredModel(): void
     {
         // SETUP
         $factory = new Factory();
         // TEST
-        $obj = $factory->generate(SimpleEmbeddedModel::class);
+        $obj = $factory->generate(SimpleTestModelPhpConfig::class);
         // ASSERT
-        $this->assertInstanceOf(SimpleEmbeddedModel::class, $obj);
+        $this->assertInstanceOf(SimpleTestModelPhpConfig::class, $obj);
         $this->assertIsString($obj->firstName);
     }
 
