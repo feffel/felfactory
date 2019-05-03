@@ -24,8 +24,7 @@
         "php": "~7.2",
         "doctrine/annotations": "^1.6",
         "fzaninotto/faker": "^1.8",
-        "mustangostang/spyc": "^0.6.2",
-        "php-di/phpdoc-reader": "dev-master"
+        "mustangostang/spyc": "^0.6.2"
     },
     "require-dev": {
         "mockery/mockery": "^1.2",

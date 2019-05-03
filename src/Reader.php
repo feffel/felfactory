@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace felfactory;
 
 use felfactory\Models\Property;
-use PhpDocReader\PhpDocReader;
 use ReflectionClass;
 
 class Reader
