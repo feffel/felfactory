@@ -1,12 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace felfactory\tests;
+namespace felfactory\tests\Parser;
 
 use felfactory\Parser\Lexer;
 use PHPUnit\Framework\TestCase;
 
-class ShapeLexerTest extends TestCase
+/**
+ * Class ShapeLexerTest
+ * @covers \felfactory\Parser\Lexer
+ * @package felfactory\tests
+ */
+class LexerTest extends TestCase
 {
     public function identifiableSymbols(): array
     {
