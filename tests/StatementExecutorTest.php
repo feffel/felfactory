@@ -25,12 +25,12 @@ class StatementExecutorTest extends TestCase
     public function testClassStatement(): void
     {
         // SETUP
-        $executor        = $this->getExecutor();
-        $statment        = new Statement();
-        $statment->type  = StatementType::CLASS_T;
-        $statment->value = SimpleAnnotatedModel::class;
+        $executor         = $this->getExecutor();
+        $statement        = new Statement();
+        $statement->type  = StatementType::CLASS_T;
+        $statement->value = SimpleAnnotatedModel::class;
         // TEST
-        $call   = $executor->execute($statment);
+        $call   = $executor->execute($statement);
         $result = $call();
         // ASSERT
         $this->assertInstanceOf(SimpleAnnotatedModel::class, $result);
@@ -40,12 +40,12 @@ class StatementExecutorTest extends TestCase
     public function testValueStatement(): void
     {
         // SETUP
-        $executor        = $this->getExecutor();
-        $statment        = new Statement();
-        $statment->type  = StatementType::VALUE_T;
-        $statment->value = '5';
+        $executor         = $this->getExecutor();
+        $statement        = new Statement();
+        $statement->type  = StatementType::VALUE_T;
+        $statement->value = '5';
         // TEST
-        $result = $executor->execute($statment)();
+        $result = $executor->execute($statement)();
         // ASSERT
         $this->assertIsInt($result);
         $this->assertEquals(5, $result);
@@ -54,12 +54,12 @@ class StatementExecutorTest extends TestCase
     public function testGenerateStatement(): void
     {
         // SETUP
-        $executor        = $this->getExecutor();
-        $statment        = new Statement();
-        $statment->type  = StatementType::GENERATE_T;
-        $statment->value = 'firstName';
+        $executor         = $this->getExecutor();
+        $statement        = new Statement();
+        $statement->type  = StatementType::GENERATE_T;
+        $statement->value = 'firstName';
         // TEST
-        $call   = $executor->execute($statment);
+        $call   = $executor->execute($statement);
         $result = $call();
         // ASSERT
         $this->assertIsString($result);
@@ -73,12 +73,12 @@ class StatementExecutorTest extends TestCase
         $innerStatement        = new Statement();
         $innerStatement->type  = StatementType::CLASS_T;
         $innerStatement->value = SimpleAnnotatedModel::class;
-        $statment              = new Statement();
-        $statment->type        = StatementType::MANY_T;
-        $statment->value       = $innerStatement;
-        $statment->args        = ['from' => 2, 'to' => 2];
+        $statement             = new Statement();
+        $statement->type       = StatementType::MANY_T;
+        $statement->value      = $innerStatement;
+        $statement->args       = ['from' => 2, 'to' => 2];
         // TEST
-        $call   = $executor->execute($statment);
+        $call   = $executor->execute($statement);
         $result = $call();
         // ASSERT
         $this->assertIsArray($result);
@@ -91,13 +91,13 @@ class StatementExecutorTest extends TestCase
     public function testErrorOnUndefinedType(): void
     {
         // SETUP
-        $executor        = $this->getExecutor();
-        $statment        = new Statement();
-        $statment->type  = 'undefined';
-        $statment->value = SimpleAnnotatedModel::class;
+        $executor         = $this->getExecutor();
+        $statement        = new Statement();
+        $statement->type  = 'undefined';
+        $statement->value = SimpleAnnotatedModel::class;
         // ASSERT
         $this->expectException(InvalidArgumentException::class);
         // TEST
-        $executor->execute($statment);
+        $executor->execute($statement);
     }
 }

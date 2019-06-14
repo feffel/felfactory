@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": "~7.2",
+        "php": ">=7.2",
         "doctrine/annotations": "^1.6",
         "doctrine/lexer": "^1.0",
         "fzaninotto/faker": "^1.8",
