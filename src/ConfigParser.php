@@ -1,6 +1,4 @@
 <?php
-/** @noinspection OnlyWritesOnParameterInspection */
-/** @noinspection PhpUnusedLocalVariableInspection */
 declare(strict_types=1);
 
 namespace felfactory;

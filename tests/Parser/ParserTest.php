@@ -6,6 +6,7 @@ namespace felfactory\tests\Parser;
 use felfactory\Parser\Lexer;
 use felfactory\Parser\Parser;
 use felfactory\Parser\ParserException;
+use felfactory\Parser\StatementType;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -20,23 +21,23 @@ class ParserTest extends TestCase
     public function statements(): array
     {
         return [
-            ["generate('firstName')", true, Lexer::T_GENERATE],
-            ["generate('helloM8')", true, Lexer::T_GENERATE],
+            ["generate('firstName')", true, StatementType::GENERATE_T],
+            ["generate('helloM8')", true, StatementType::GENERATE_T],
             ['generate("firstName")', false],
             ['generate(firstName)', false],
-            ["class('\\felfactory\\Parser')", true, Lexer::T_CLASS],
-            ["class(\\felfactory\\Parser)", true, Lexer::T_CLASS],
+            ["class('\\felfactory\\Parser')", true, StatementType::CLASS_T],
+            ["class(\\felfactory\\Parser)", true, StatementType::CLASS_T],
             ["class('firstName')", false],
             ['class(firstName)', false],
-            ["value('5 + 4')", true, Lexer::T_VALUE],
-            ["value('hello')", true, Lexer::T_VALUE],
+            ["value('5 + 4')", true, StatementType::VALUE_T],
+            ["value('hello')", true, StatementType::VALUE_T],
             ['value("constant")', false],
             ['value(constant)', false],
             ['value(5 + 4)', false],
-            ["many(generate('firstName'), 1, 4)", true, Lexer::T_MANY],
-            ["many(class(\\felfactory\\Parser), 2, 5)", true, Lexer::T_MANY],
-            ["many(value('5 + 4'), 0, 1)", true, Lexer::T_MANY],
-            ["many(many(generate('firstName'), 2, 3), 4 ,5)", true, Lexer::T_MANY],
+            ["many(generate('firstName'), 1, 4)", true, StatementType::MANY_T],
+            ["many(class(\\felfactory\\Parser), 2, 5)", true, StatementType::MANY_T],
+            ["many(value('5 + 4'), 0, 1)", true, StatementType::MANY_T],
+            ["many(many(generate('firstName'), 2, 3), 4 ,5)", true, StatementType::MANY_T],
             ["many('firstName', 3, 4)", false],
             ["many(\\felfactory\\Parser, 5, 7)", false],
             ["many(value('5 + 4'))", false],
@@ -52,7 +53,7 @@ class ParserTest extends TestCase
      * @param bool     $correct
      * @param int|null $type
      */
-    public function testStatement(string $value, bool $correct, int $type = null): void
+    public function testStatement(string $value, bool $correct, string $type = null): void
     {
         $parser = new Parser($value);
         if (!$correct) {

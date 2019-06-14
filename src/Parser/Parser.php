@@ -50,19 +50,19 @@ class Parser
         $statement = new Statement();
         switch ($token['type']) {
             case Lexer::T_CLASS:
-                $statement->type = Lexer::T_CLASS;
+                $statement->type = StatementType::CLASS_T;
                 $this->parseClassStatement($statement);
                 break;
             case Lexer::T_GENERATE:
-                $statement->type = Lexer::T_GENERATE;
+                $statement->type = StatementType::GENERATE_T;
                 $this->parseGenerateStatement($statement);
                 break;
             case Lexer::T_VALUE:
-                $statement->type = Lexer::T_VALUE;
+                $statement->type = StatementType::VALUE_T;
                 $this->parseValueStatement($statement);
                 break;
             case Lexer::T_MANY:
-                $statement->type = Lexer::T_MANY;
+                $statement->type = StatementType::MANY_T;
                 $this->parseManyStatement($statement);
                 break;
             default:
