@@ -7,11 +7,12 @@ use ReflectionProperty;
 
 class Property
 {
-    public function __construct(ReflectionProperty $refProperty, ?string $type = null)
+    public function __construct(ReflectionProperty $refProperty, ?string $type = null, ?bool $primitive = false)
     {
-        $this->name = $refProperty->getName();
-        $this->ref  = $refProperty;
-        $this->type = $type;
+        $this->name      = $refProperty->getName();
+        $this->ref       = $refProperty;
+        $this->type      = $type;
+        $this->primitive = $primitive;
     }
 
     /** @var string */
@@ -25,4 +26,7 @@ class Property
 
     /** @var ?callable */
     public $callback;
+
+    /** @var bool|null */
+    public $primitive;
 }

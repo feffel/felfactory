@@ -27,18 +27,18 @@ class PhpDocReader
     private $parser;
 
     private const IGNORED_TYPES = [
-        'bool',
-        'boolean',
-        'string',
-        'int',
-        'integer',
-        'float',
-        'double',
-        'array',
-        'object',
-        'callable',
-        'resource',
-        'mixed',
+        'bool',     'bool[]',
+        'boolean',  'boolean[]',
+        'string',   'string[]',
+        'int',      'int[]',
+        'integer',  'integer[]',
+        'float',    'float[]',
+        'double',   'double[]',
+        'array',    'array[]',
+        'object',   'object[]',
+        'callable', 'callable[]',
+        'resource', 'resource[]',
+        'mixed',    'mixed[]',
     ];
 
     private const  SELF_KEYWORDS = [
@@ -49,6 +49,11 @@ class PhpDocReader
     public function __construct()
     {
         $this->parser = new PhpParser();
+    }
+
+    public function isPrimitive(string $type): bool
+    {
+        return in_array($type, self::IGNORED_TYPES, true);
     }
 
     /**
@@ -70,8 +75,8 @@ class PhpDocReader
         }
 
         // Ignore primitive types
-        if (in_array($type, self::IGNORED_TYPES, true)) {
-            return null;
+        if ($this->isPrimitive($type)) {
+            return $type;
         }
 
         // Ignore types containing special characters ([], <> ...)

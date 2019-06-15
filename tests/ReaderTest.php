@@ -38,6 +38,7 @@ class ReaderTest extends TestCase
         $reader    = new Reader();
         $docReader = m::mock(PhpDocReader::class);
         $docReader->allows('getPropertyClass')->andReturnValues(['int', 'string']);
+        $docReader->allows('isPrimitive')->andReturn(true);
         ReflectionHelper::set($reader, 'reader', $docReader);
         // TEST
         $properties = $reader->readProperties(SimpleTestModel::class);

@@ -61,9 +61,9 @@ class Factory
         );
         foreach ($nonConfiguredProperties as $property) {
             $type = $property->type;
-            if ($type === null) {
+            if ($property->primitive === true || $type === null) {
                 $property->callback = $this->guesser->guess($property);
-            } else {
+            } elseif ($property->primitive === false) {
                 $property->callback = function () use ($type): object {
                     return $this->generate($type);
                 };

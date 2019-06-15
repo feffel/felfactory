@@ -30,9 +30,11 @@ class Reader
         $properties           = [];
         foreach ($reflectionProperties as $reflectionProperty) {
             $reflectionProperty->setAccessible(true);
+            $type = $this->reader->getPropertyClass($reflectionProperty);
             $property                    = new Property(
                 $reflectionProperty,
-                $this->reader->getPropertyClass($reflectionProperty)
+                $type,
+                $type ? $this->reader->isPrimitive($type) : null
             );
             $properties[$property->name] = $property;
         }
