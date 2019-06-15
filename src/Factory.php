@@ -65,7 +65,8 @@ class Factory
                 $property->callback = $this->guesser->guess($property);
             } elseif ($property->primitive === false) {
                 $property->callback = function () use ($type): object {
-                    return $this->generate($type);
+                    // @TODO support array generation instead of ignoring it
+                    return $this->generate(preg_replace('/\[\]$/', '', $type));
                 };
             }
         }

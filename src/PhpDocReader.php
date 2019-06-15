@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace felfactory;
 
 use Doctrine\Common\Annotations\PhpParser;
-use function in_array;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
 use ReflectionProperty;
 use Reflector;
+use function in_array;
 
 /**
  * PhpDoc reader
@@ -66,6 +66,7 @@ class PhpDocReader
      */
     public function getPropertyClass(ReflectionProperty $property): ?string
     {
+        $postfix = '';
         // Get the content of the @var annotation
         /** @noinspection NotOptimalRegularExpressionsInspection */
         if (preg_match('/@var\s+([^\s]+)/', $property->getDocComment() ?: '', $matches)) {
@@ -79,7 +80,12 @@ class PhpDocReader
             return $type;
         }
 
-        // Ignore types containing special characters ([], <> ...)
+        if (substr_compare($type, '[]', -2) === 0) {
+            $postfix = '[]';
+            $type    = substr($type, 0, -2);
+        }
+
+        // Ignore types containing special characters (<> ...)
         if (! preg_match('/^[a-zA-Z0-9\\\\_]+$/', $type)) {
             return null;
         }
@@ -114,7 +120,7 @@ class PhpDocReader
         }
 
         // Remove the leading \ (FQN shouldn't contain it)
-        $type = ltrim($type, '\\');
+        $type = ltrim($type, '\\').$postfix;
 
         return $type;
     }
