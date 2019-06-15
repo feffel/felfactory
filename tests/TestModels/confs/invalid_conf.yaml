@@ -1,6 +1,6 @@
 
 felfactory\tests\TestModels\DoesNotExist:
-    firstName: 'firstName'
-    lastName: 'lastName'
+    firstName: "generate('firstName')"
+    lastName: "generate('lastName')"
 
 felfactory\tests\TestModels\SimpleTestModelYamlConfig: 5

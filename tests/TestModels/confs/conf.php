@@ -4,8 +4,8 @@ use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
 
 return [
     SimpleTestModelPhpConfig::class => [
-        'firstName' => 'firstName',
-        'lastName'  => 'lastName',
-        'age'       => 'numberBetween(18, 59)',
+        'firstName' => "generate('firstName')",
+        'lastName'  => "generate('lastName')",
+        'age'       => "generate('numberBetween(18, 59)')",
     ],
 ];

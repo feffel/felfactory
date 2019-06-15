@@ -6,6 +6,7 @@ namespace felfactory;
 use Faker\Generator;
 use felfactory\ConfigLoader\ConfigLoader;
 use felfactory\Models\Property;
+use felfactory\Parser\Parser;
 use InvalidArgumentException;
 use ReflectionException;
 
@@ -27,16 +28,15 @@ class Factory
     protected $generator;
     /** @var Guesser */
     protected $guesser;
-    /** @var ConfigParser */
-    protected $parser;
-
+    /** @var StatementExecutor */
+    protected $executor;
     public function __construct(Generator $generator = null)
     {
         $this->reader       = new Reader();
         $this->configLoader = new ConfigLoader();
         $this->generator    = $generator ?? \Faker\Factory::create();
-        $this->parser       = new ConfigParser($this->generator);
         $this->guesser      = new Guesser($this->generator);
+        $this->executor     = new StatementExecutor($this->generator, [$this, 'generate']);
     }
 
     /**
@@ -48,8 +48,9 @@ class Factory
     {
         $properties = $this->reader->readProperties($className);
         $config     = $this->configLoader->load($className);
-        foreach ($config as $propertyName => $callable) {
-            $properties[$propertyName]->callback = $this->parser->parse($callable);
+        foreach ($config as $propertyName => $propertyConfig) {
+            $parser                              = new Parser($propertyConfig);
+            $properties[$propertyName]->callback = $this->executor->execute($parser->parse());
         }
         /** @var Property[] $nonConfiguredProperties */
         $nonConfiguredProperties = array_filter(
