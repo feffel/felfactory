@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace felfactory\Parser;
 
+use felfactory\Statement\Statement;
+use felfactory\Statement\StatementType;
+
 class Parser
 {
     /** @var Lexer */

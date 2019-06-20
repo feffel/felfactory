@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace felfactory\Parser;
+namespace felfactory\Statement;
 
 class Statement
 {

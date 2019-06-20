@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace felfactory\tests\Parser;
 
-use felfactory\Parser\Lexer;
 use felfactory\Parser\Parser;
 use felfactory\Parser\ParserException;
-use felfactory\Parser\StatementType;
+use felfactory\Statement\StatementType;
 use PHPUnit\Framework\TestCase;
 
 /**

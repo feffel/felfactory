@@ -7,11 +7,11 @@ use Faker\Generator;
 use felfactory\ConfigLoader\ConfigLoader;
 use felfactory\Models\Property;
 use felfactory\Parser\Parser;
+use felfactory\Statement\StatementExecutor;
 use InvalidArgumentException;
 use ReflectionException;
 
 /**
- * cool
  * Class Factory
  *
  * @package felfactory

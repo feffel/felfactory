@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace felfactory\tests;
 
 use felfactory\Factory;
-use felfactory\Parser\Statement;
-use felfactory\Parser\StatementType;
-use felfactory\StatementExecutor;
+use felfactory\Statement\Statement;
+use felfactory\Statement\StatementType;
+use felfactory\Statement\StatementExecutor;
 use felfactory\tests\TestModels\SimpleAnnotatedModel;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

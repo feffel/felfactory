@@ -1,11 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace felfactory;
+namespace felfactory\Statement;
 
 use Faker\Generator;
-use felfactory\Parser\Statement;
-use felfactory\Parser\StatementType;
 use InvalidArgumentException;
 
 class StatementExecutor
