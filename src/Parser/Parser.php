@@ -4,20 +4,24 @@ declare(strict_types=1);
 namespace felfactory\Parser;
 
 use felfactory\Statement\Statement;
-use felfactory\Statement\StatementType;
+use felfactory\Statement\StatementFactory;
 
 class Parser
 {
     /** @var Lexer */
     protected $lexer;
 
+    /** @var StatementFactory */
+    protected $factory;
+
     /** @var string */
     protected $input;
 
     public function __construct(string $input)
     {
-        $this->input = $input;
-        $this->lexer = new Lexer($input);
+        $this->input   = $input;
+        $this->lexer   = new Lexer($input);
+        $this->factory = new StatementFactory();
     }
 
     public function parse(): Statement
@@ -50,23 +54,18 @@ class Parser
     {
         $this->lexer->moveNext();
         $token     = $this->lexer->lookahead;
-        $statement = new Statement();
         switch ($token['type']) {
             case Lexer::T_CLASS:
-                $statement->type = StatementType::CLASS_T;
-                $this->parseClassStatement($statement);
+                $statement = $this->parseClassStatement();
                 break;
             case Lexer::T_GENERATE:
-                $statement->type = StatementType::GENERATE_T;
-                $this->parseGenerateStatement($statement);
+                $statement = $this->parseGenerateStatement();
                 break;
             case Lexer::T_VALUE:
-                $statement->type = StatementType::VALUE_T;
-                $this->parseValueStatement($statement);
+                $statement = $this->parseValueStatement();
                 break;
             case Lexer::T_MANY:
-                $statement->type = StatementType::MANY_T;
-                $this->parseManyStatement($statement);
+                $statement = $this->parseManyStatement();
                 break;
             default:
                 throw new ParserException(
@@ -81,10 +80,10 @@ class Parser
 
     /**
      *
-     * @param Statement $statement
+     * @return Statement
      * @throws ParserException
      */
-    protected function parseClassStatement(Statement $statement): void
+    protected function parseClassStatement(): Statement
     {
         $this->matchOrThrow(Lexer::T_OPEN_PARENTHESIS);
         $this->lexer->moveNext();
@@ -97,47 +96,46 @@ class Parser
             throw new ParserException($this->input, $token, [Lexer::T_FULLY_QUALIFIED_NAME]);
         }
         $this->matchOrThrow(Lexer::T_CLOSE_PARENTHESIS);
-        $statement->value = $token['value'];
+        return $this->factory->makeClass($token['value']);
     }
 
     /**
-     * @param Statement $statement
+     * @return Statement
      * @throws ParserException
      */
-    protected function parseGenerateStatement(Statement $statement): void
+    protected function parseGenerateStatement(): Statement
     {
         $this->matchOrThrow(Lexer::T_OPEN_PARENTHESIS);
         $token = $this->matchOrThrow(Lexer::T_STRING);
         $this->matchOrThrow(Lexer::T_CLOSE_PARENTHESIS);
-        $statement->value = $token['value'];
+        return $this->factory->makeGenerate($token['value']);
     }
 
     /**
-     * @param Statement $statement
+     * @return Statement
      * @throws ParserException
      */
-    protected function parseValueStatement(Statement $statement): void
-    {
-        $this->parseGenerateStatement($statement);
-    }
-
-    /**
-     * @param Statement $statement
-     * @throws ParserException
-     */
-    protected function parseManyStatement(Statement $statement): void
+    protected function parseValueStatement(): Statement
     {
         $this->matchOrThrow(Lexer::T_OPEN_PARENTHESIS);
-        $innerStatement   = $this->parseStatement();
-        $statement->value = $innerStatement;
+        $token = $this->matchOrThrow(Lexer::T_STRING);
+        $this->matchOrThrow(Lexer::T_CLOSE_PARENTHESIS);
+        return $this->factory->makeValue($token['value']);
+    }
+
+    /**
+     * @return Statement
+     * @throws ParserException
+     */
+    protected function parseManyStatement(): Statement
+    {
+        $this->matchOrThrow(Lexer::T_OPEN_PARENTHESIS);
+        $innerStatement = $this->parseStatement();
         $this->matchOrThrow(Lexer::T_COMMA);
         $from = $this->matchOrThrow(Lexer::T_INTEGER);
         $this->matchOrThrow(Lexer::T_COMMA);
-        $to              = $this->matchOrThrow(Lexer::T_INTEGER);
-        $statement->args = [
-            'from' => $from['value'],
-            'to'   => $to['value'],
-        ];
+        $to = $this->matchOrThrow(Lexer::T_INTEGER);
         $this->matchOrThrow(Lexer::T_CLOSE_PARENTHESIS);
+        return $this->factory->makeMany($innerStatement, (int)$from['value'], (int)$to['value']);
     }
 }

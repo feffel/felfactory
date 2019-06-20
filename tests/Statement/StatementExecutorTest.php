@@ -11,6 +11,11 @@ use felfactory\tests\TestModels\SimpleAnnotatedModel;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class StatementExecutorTest
+ * @covers \felfactory\Statement\StatementExecutor
+ * @package felfactory\tests
+ */
 class StatementExecutorTest extends TestCase
 {
 

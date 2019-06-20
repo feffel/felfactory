@@ -37,6 +37,7 @@ class Lexer extends AbstractLexer
         $this->setInput($input);
     }
 
+    // @codeCoverageIgnoreStart
     protected function getCatchablePatterns(): array
     {
         return [
@@ -52,6 +53,7 @@ class Lexer extends AbstractLexer
     {
         return ['\s+', '(.)'];
     }
+    // @codeCoverageIgnoreEnd
 
     protected function getType(&$value)
     {
