@@ -13,11 +13,11 @@ use Doctrine\Common\Annotations\Annotation;
  *
  * @package felfactory\Annotation
  */
-class Shape
+class Figure
 {
     /**
      * @Annotation\Required()
      * @var string
      */
-    public $shape;
+    public $figure;
 }

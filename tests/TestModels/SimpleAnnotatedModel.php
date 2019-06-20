@@ -8,19 +8,19 @@ use felfactory\Annotation as Factory;
 class SimpleAnnotatedModel
 {
     /**
-     * @Factory\Shape("generate('firstName')")
+     * @Factory\Figure("generate('firstName')")
      * @var string
      */
     public $firstName;
 
     /**
-     * @Factory\Shape("generate('lastName')")
+     * @Factory\Figure("generate('lastName')")
      * @var string
      */
     protected $lastName;
 
     /**
-     * @Factory\Shape("generate('numberBetween(18, 59)')")
+     * @Factory\Figure("generate('numberBetween(18, 59)')")
      * @var int
      */
     private $age;

@@ -7,19 +7,19 @@ use felfactory\Annotation as Factory;
 class SimpleInvalidAnnotationTestModel
 {
     /**
-     * @Factory\Shape()
+     * @Factory\Figure()
      * @var string
      */
     public $firstName;
 
     /**
-     * @Factory\Shape()
+     * @Factory\Figure()
      * @var string
      */
     protected $lastName;
 
     /**
-     * @Factory\Shape()
+     * @Factory\Figure()
      * @var int
      */
     private $age;

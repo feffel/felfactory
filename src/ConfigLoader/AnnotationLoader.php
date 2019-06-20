@@ -6,7 +6,7 @@ namespace felfactory\ConfigLoader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use felfactory\Annotation\Shape;
+use felfactory\Annotation\Figure;
 use ReflectionClass;
 
 class AnnotationLoader
@@ -33,9 +33,10 @@ class AnnotationLoader
         $properties = $reflection->getProperties();
         $config     = [];
         foreach ($properties as $property) {
-            $shape = $this->reader->getPropertyAnnotation($property, Shape::class);
-            if ($shape && $shape->shape) {
-                $config[$property->getName()] = $shape->shape;
+            /** @var Figure|null $figure */
+            $figure = $this->reader->getPropertyAnnotation($property, Figure::class);
+            if ($figure && $figure->figure) {
+                $config[$property->getName()] = $figure->figure;
             }
         }
 

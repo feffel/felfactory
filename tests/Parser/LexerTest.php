@@ -7,7 +7,7 @@ use felfactory\Parser\Lexer;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class ShapeLexerTest
+ * Class LexerTest
  * @covers \felfactory\Parser\Lexer
  * @package felfactory\tests
  */
