@@ -46,14 +46,7 @@ class Factory
     protected function configure(string $className): array
     {
         $properties = $this->configurator->configureProperties($className);
-        /** @var Property[] $nonConfiguredProperties */
-        $missingProperties = array_filter(
-            $properties,
-            static function (Property $property): bool {
-                return !$property->isConfigured();
-            }
-        );
-        $this->guesser->guessMissing($missingProperties);
+        $this->guesser->guessMissing($properties);
         foreach ($properties as $property) {
             if ($property->hasStatement()) {
                 $property->setCallback($this->executor->execute($property->getStatement()));

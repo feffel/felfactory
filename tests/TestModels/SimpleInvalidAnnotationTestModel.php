@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace felfactory\tests\TestModels;
+
 use felfactory\Annotation as Factory;
 
 class SimpleInvalidAnnotationTestModel

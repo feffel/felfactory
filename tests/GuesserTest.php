@@ -28,16 +28,13 @@ class GuesserTest extends TestCase
         $ref            = new ReflectionClass(SimpleTestModelPhpConfig::class);
         $firstName      = new Property($ref->getProperty('firstName'));
         $lastName       = new Property($ref->getProperty('lastName'));
-        $age            = new Property($ref->getProperty('age'));
         $firstName->setPrimitive(true);
         $lastName->setPrimitive(true);
-        $age->setStatement(new Statement());
         // TEST
-        $guesser->guessMissing([$firstName, $lastName, $age]);
+        $guesser->guessMissing([$firstName, $lastName]);
         // ASSERT
         $this->assertIsCallable($firstName->getCallback());
         $this->assertIsCallable($lastName->getCallback());
-        $this->assertNull($age->getCallback());
     }
 
     public function testGuessObjectsFromType(): void

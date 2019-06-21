@@ -71,7 +71,8 @@ class PropertyTest extends TestCase
         $refProperty = new ReflectionProperty(SimpleTestModel::class, 'firstName');
         $property = new Property($refProperty);
         $primitive = true;
-        $callback = function (): void {};
+        $callback = function (): void {
+        };
         $statement = new Statement();
         $type = 'string';
         $name = 'firstName';
