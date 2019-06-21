@@ -29,8 +29,7 @@ class Guesser
     public function guessMissing(array $properties): void
     {
         foreach ($properties as $property) {
-            $type = $property->type;
-            if ($property->primitive === true || $type === null) {
+            if ($property->primitive === true || $property->type === null) {
                 // @TODO add a statement ya baba
                 $property->callback = $this->guessPrimitive($property);
             } elseif ($property->primitive === false) {

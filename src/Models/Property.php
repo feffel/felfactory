@@ -43,6 +43,9 @@ class Property
         if ($this->array !== null) {
             return $this->array;
         }
+        if ($this->type === null) {
+            return false;
+        }
         $this->array = substr_compare($this->type, '[]', -2) === 0;
         if ($this->array) {
             $this->type = substr($this->type, 0, -2);
