@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace felfactory\tests;
 
-use felfactory\ConfigLoader\ConfigLoader;
+use felfactory\Config\ConfigLoader;
 use felfactory\tests\TestModels\NestedTestModel;
 use felfactory\tests\TestModels\SimpleAnnotatedModel;
 use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class ConfigLoaderTest
  *
- * @covers  \felfactory\ConfigLoader\ConfigLoader
+ * @covers  \felfactory\Config\ConfigLoader
  * @package felfactory\tests
  */
 class ConfigLoaderTest extends TestCase

@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace felfactory;
 
 use Faker\Generator;
-use felfactory\ConfigLoader\ConfigLoader;
+use felfactory\Config\Configurator;
+use felfactory\Guesser\Guesser;
 use felfactory\Models\Property;
-use felfactory\Parser\Parser;
 use felfactory\Statement\StatementExecutor;
 use InvalidArgumentException;
 use ReflectionException;
@@ -20,20 +20,18 @@ class Factory
 {
     protected const SELF_NESTING_TOLERANCE = 1;
 
-    /** @var Reader */
-    protected $reader;
-    /** @var ConfigLoader */
-    protected $configLoader;
+    /** @var Configurator */
+    protected $configurator;
     /** @var Generator */
     protected $generator;
     /** @var Guesser */
     protected $guesser;
     /** @var StatementExecutor */
     protected $executor;
+
     public function __construct(Generator $generator = null)
     {
-        $this->reader       = new Reader();
-        $this->configLoader = new ConfigLoader();
+        $this->configurator = new Configurator();
         $this->generator    = $generator ?? \Faker\Factory::create();
         $this->guesser      = new Guesser($this->generator);
         $this->executor     = new StatementExecutor($this->generator, [$this, 'generate']);
@@ -46,31 +44,20 @@ class Factory
      */
     protected function configure(string $className): array
     {
-        $properties = $this->reader->readProperties($className);
-        $config     = $this->configLoader->load($className);
-        foreach ($config as $propertyName => $propertyConfig) {
-            $parser                              = new Parser($propertyConfig);
-            $properties[$propertyName]->callback = $this->executor->execute($parser->parse());
-        }
+        $properties = $this->configurator->configureProperties($className);
         /** @var Property[] $nonConfiguredProperties */
-        $nonConfiguredProperties = array_filter(
+        $missingProperties = array_filter(
             $properties,
             static function (Property $property): bool {
-                return $property->callback === null;
+                return $property->statement === null;
             }
         );
-        foreach ($nonConfiguredProperties as $property) {
-            $type = $property->type;
-            if ($property->primitive === true || $type === null) {
-                $property->callback = $this->guesser->guess($property);
-            } elseif ($property->primitive === false) {
-                $property->callback = function () use ($type): object {
-                    // @TODO support array generation instead of ignoring it
-                    return $this->generate(preg_replace('/\[\]$/', '', $type));
-                };
+        $this->guesser->guessMissing($missingProperties);
+        foreach ($properties as $property) {
+            if ($property->statement) {
+                $property->callback = $this->executor->execute($property->statement);
             }
         }
-
         return $properties;
     }
 

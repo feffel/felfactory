@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace felfactory\tests;
 
-use felfactory\ConfigLoader\PhpLoader;
+use felfactory\Config\PhpLoader;
 use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class PhpLoaderTest
  *
- * @covers  \felfactory\ConfigLoader\PhpLoader
+ * @covers  \felfactory\Config\PhpLoader
  * @package felfactory\tests
  */
 class PhpLoaderTest extends TestCase

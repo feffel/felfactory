@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace felfactory\tests;
 
+use felfactory\Config\ConfigLoader;
 use felfactory\Factory;
 use felfactory\tests\TestModels\EmptyTestModel;
 use felfactory\tests\TestModels\NestedTestModel;
@@ -80,5 +81,11 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(SimpleTestModel::class, $obj->simpleObj);
         $this->assertIsString($obj->simpleObj->firstName);
         $this->assertIsString($obj->address);
+    }
+
+    protected function tearDown(): void
+    {
+        ReflectionHelper::set(ConfigLoader::class, 'configs', []);
+        ReflectionHelper::set(ConfigLoader::class, 'initiated', false);
     }
 }

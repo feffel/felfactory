@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace felfactory\tests;
 
-use felfactory\ConfigLoader\YamlLoader;
+use felfactory\Config\YamlLoader;
 use felfactory\tests\TestModels\SimpleTestModelYamlConfig;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class YamlLoaderTest
  *
- * @covers \felfactory\ConfigLoader\YamlLoader
+ * @covers \felfactory\Config\YamlLoader
  * @package felfactory\tests
  */
 class YamlLoaderTest extends TestCase

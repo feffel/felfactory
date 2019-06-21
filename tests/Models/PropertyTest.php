@@ -26,4 +26,38 @@ class PropertyTest extends TestCase
         $this->assertEquals(null, $property->type);
         $this->assertSame($refProperty, $property->ref);
     }
+
+    public function testArrayType(): void
+    {
+        // SETUP
+        $refProperty = new ReflectionProperty(SimpleTestModel::class, 'firstName');
+        // TEST
+        $property = new Property($refProperty);
+        $property->type = 'string';
+        $isArray = $property->isArray();
+        // ASSERT
+        $this->assertFalse($isArray);
+        $this->assertEquals('string', $property->type);
+        $isArray = $property->isArray();
+        // ASSERT
+        $this->assertFalse($isArray);
+        $this->assertEquals('string', $property->type);
+    }
+
+    public function testNotArrayType(): void
+    {
+        // SETUP
+        $refProperty = new ReflectionProperty(SimpleTestModel::class, 'firstName');
+        // TEST
+        $property = new Property($refProperty);
+        $property->type = 'string[]';
+        $isArray = $property->isArray();
+        // ASSERT
+        $this->assertTrue($isArray);
+        $this->assertEquals('string', $property->type);
+        $isArray = $property->isArray();
+        // ASSERT
+        $this->assertTrue($isArray);
+        $this->assertEquals('string', $property->type);
+    }
 }

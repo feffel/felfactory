@@ -1,26 +1,32 @@
 <?php
 declare(strict_types=1);
 
-namespace felfactory\ConfigLoader;
+namespace felfactory\Config;
 
-use Spyc;
-
-class YamlLoader
+class PhpLoader
 {
-    /** @deprecated  */
+    /** @deprecated */
     protected function getFile(): string
     {
         // @TODO Replace this with proper configs
-        return getenv('YAML_FILE') ?: '';
+        return getenv('CONFIG_FILE') ?: '';
     }
 
+    /**
+     * @return array[]
+     * @psalm-return array<string, array>
+     */
     public function discover(): array
     {
         $file = $this->getFile();
         if (!file_exists($file)) {
             return [];
         }
-        $configs = Spyc::YAMLLoad($file);
+
+        $configs = include $file;
+        if (!is_array($configs)) {
+            return [];
+        }
         $configs = array_filter(
             $configs,
             /**

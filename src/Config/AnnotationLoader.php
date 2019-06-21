@@ -2,7 +2,7 @@
 /** @noinspection PhpDocMissingThrowsInspection */
 declare(strict_types=1);
 
-namespace felfactory\ConfigLoader;
+namespace felfactory\Config;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;

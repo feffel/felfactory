@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace felfactory\ConfigLoader;
+namespace felfactory\Config;
 
 class ConfigLoader
 {

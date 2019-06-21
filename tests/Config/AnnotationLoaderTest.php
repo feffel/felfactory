@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace felfactory\tests;
 
-use felfactory\ConfigLoader\AnnotationLoader;
+use felfactory\Config\AnnotationLoader;
 use felfactory\tests\TestModels\SimpleAnnotatedModel;
 use felfactory\tests\TestModels\SimpleInvalidAnnotationTestModel;
 use felfactory\tests\TestModels\SimpleTestModel;
@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class AnnotationLoaderTest
  *
- * @covers \felfactory\ConfigLoader\AnnotationLoader
+ * @covers \felfactory\Config\AnnotationLoader
  * @package felfactory\tests
  */
 class AnnotationLoaderTest extends TestCase
