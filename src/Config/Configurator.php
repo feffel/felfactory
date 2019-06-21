@@ -28,7 +28,7 @@ class Configurator
         $properties = $this->reader->readProperties($className);
         $config     = $this->configLoader->load($className);
         foreach ($config as $propertyName => $propertyConfig) {
-            $properties[$propertyName]->statement = (new Parser($propertyConfig))->parse();
+            $properties[$propertyName]->setStatement((new Parser($propertyConfig))->parse());
         }
 
         return $properties;

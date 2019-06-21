@@ -49,13 +49,13 @@ class Factory
         $missingProperties = array_filter(
             $properties,
             static function (Property $property): bool {
-                return $property->statement === null;
+                return !$property->isConfigured();
             }
         );
         $this->guesser->guessMissing($missingProperties);
         foreach ($properties as $property) {
-            if ($property->statement) {
-                $property->callback = $this->executor->execute($property->statement);
+            if (($statement = $property->getStatement()) !== null) {
+                $property->setCallback($this->executor->execute($statement));
             }
         }
         return $properties;
@@ -88,8 +88,8 @@ class Factory
         $class  = new \ReflectionClass($className);
         $obj    = $class->newInstance();
         foreach ($config as $property) {
-            $val = $this->evaluateCallback($property->callback);
-            $property->ref->setValue($obj, $val);
+            $val = $this->evaluateCallback($property->getCallback());
+            $property->getRef()->setValue($obj, $val);
         }
 
         return $obj;

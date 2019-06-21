@@ -60,7 +60,7 @@ class ConfiguratorTest extends TestCase
         // ASSERT
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($properties));
         $this->assertInstanceOf(Property::class, reset($properties));
-        $this->assertEquals('string', reset($properties)->type);
+        $this->assertEquals('string', reset($properties)->getType());
     }
 
     public function testConfiguredModel(): void
@@ -72,7 +72,7 @@ class ConfiguratorTest extends TestCase
         // ASSERT
         $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($properties));
         $this->assertInstanceOf(Property::class, reset($properties));
-        $statement = reset($properties)->statement;
+        $statement = reset($properties)->getStatement();
         $this->assertInstanceOf(Statement::class, $statement);
         $this->assertEquals('firstName', $statement->value);
     }
@@ -85,7 +85,7 @@ class ConfiguratorTest extends TestCase
         $properties = $configurator->configureProperties(NestedTestModel::class);
         // ASSERT
         $this->assertEquals(['simpleObj', 'address'], array_keys($properties));
-        $this->assertEquals(SimpleTestModel::class, reset($properties)->type);
+        $this->assertEquals(SimpleTestModel::class, reset($properties)->getType());
     }
 
     protected function tearDown(): void

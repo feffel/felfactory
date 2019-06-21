@@ -22,9 +22,21 @@ class PropertyTest extends TestCase
         // TEST
         $property = new Property($refProperty);
         // ASSERT
-        $this->assertEquals($refProperty->getName(), $property->name);
-        $this->assertEquals(null, $property->type);
-        $this->assertSame($refProperty, $property->ref);
+        $this->assertEquals($refProperty->getName(), $property->getName());
+        $this->assertEquals(null, $property->getType());
+        $this->assertSame($refProperty, $property->getRef());
+    }
+
+    public function testArrayNoType(): void
+    {
+        // SETUP
+        $refProperty = new ReflectionProperty(SimpleTestModel::class, 'firstName');
+        // TEST
+        $property = new Property($refProperty);
+        $isArray = $property->isArray();
+        // ASSERT
+        $this->assertFalse($isArray);
+        $this->assertNull($property->getType());
     }
 
     public function testArrayType(): void
@@ -33,15 +45,11 @@ class PropertyTest extends TestCase
         $refProperty = new ReflectionProperty(SimpleTestModel::class, 'firstName');
         // TEST
         $property = new Property($refProperty);
-        $property->type = 'string';
+        $property->setType('string');
         $isArray = $property->isArray();
         // ASSERT
         $this->assertFalse($isArray);
-        $this->assertEquals('string', $property->type);
-        $isArray = $property->isArray();
-        // ASSERT
-        $this->assertFalse($isArray);
-        $this->assertEquals('string', $property->type);
+        $this->assertEquals('string', $property->getType());
     }
 
     public function testNotArrayType(): void
@@ -50,14 +58,10 @@ class PropertyTest extends TestCase
         $refProperty = new ReflectionProperty(SimpleTestModel::class, 'firstName');
         // TEST
         $property = new Property($refProperty);
-        $property->type = 'string[]';
+        $property->setType('string[]');
         $isArray = $property->isArray();
         // ASSERT
         $this->assertTrue($isArray);
-        $this->assertEquals('string', $property->type);
-        $isArray = $property->isArray();
-        // ASSERT
-        $this->assertTrue($isArray);
-        $this->assertEquals('string', $property->type);
+        $this->assertEquals('string', $property->getType());
     }
 }

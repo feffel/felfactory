@@ -29,13 +29,13 @@ class GuesserTest extends TestCase
         $firstName      = new Property($ref->getProperty('firstName'));
         $lastName       = new Property($ref->getProperty('lastName'));
         $age            = new Property($ref->getProperty('age'));
-        $age->statement = new Statement();
+        $age->setStatement(new Statement());
         // TEST
         $guesser->guessMissing([$firstName, $lastName, $age]);
         // ASSERT
-        $this->assertIsCallable($firstName->callback);
-        $this->assertIsCallable($lastName->callback);
-        $this->assertNull($age->callback);
+        $this->assertIsCallable($firstName->getCallback());
+        $this->assertIsCallable($lastName->getCallback());
+        $this->assertNull($age->getCallback());
     }
 
     public function testGuessObjectsFromType(): void
@@ -44,13 +44,13 @@ class GuesserTest extends TestCase
         $guesser              = new Guesser(\Faker\Factory::create());
         $ref                  = new ReflectionClass(NestedTestModel::class);
         $simpleObj            = new Property($ref->getProperty('simpleObj'));
-        $simpleObj->primitive = false;
-        $simpleObj->type      = SimpleTestModel::class;
+        $simpleObj->setPrimitive(false);
+        $simpleObj->setType(SimpleTestModel::class);
         // TEST
         $guesser->guessMissing([$simpleObj]);
         // ASSERT
-        $this->assertInstanceOf(Statement::class, $simpleObj->statement);
-        $this->assertEquals(SimpleTestModel::class, $simpleObj->statement->value);
+        $this->assertInstanceOf(Statement::class, $simpleObj->getStatement());
+        $this->assertEquals(SimpleTestModel::class, $simpleObj->getStatement()->value);
     }
 
     public function testGuessArrayOfObjects(): void
@@ -59,14 +59,14 @@ class GuesserTest extends TestCase
         $guesser              = new Guesser(\Faker\Factory::create());
         $ref                  = new ReflectionClass(NestedTestModel::class);
         $simpleObj            = new Property($ref->getProperty('simpleObj'));
-        $simpleObj->primitive = false;
-        $simpleObj->type      = SimpleTestModel::class.'[]';
+        $simpleObj->setPrimitive(false);
+        $simpleObj->setType(SimpleTestModel::class.'[]');
         // TEST
         $guesser->guessMissing([$simpleObj]);
         // ASSERT
-        $this->assertInstanceOf(Statement::class, $simpleObj->statement);
-        $this->assertEquals(StatementType::MANY_T, $simpleObj->statement->type);
-        $this->assertInstanceOf(Statement::class, $simpleObj->statement->value);
-        $this->assertEquals(SimpleTestModel::class, $simpleObj->statement->value->value);
+        $this->assertInstanceOf(Statement::class, $simpleObj->getStatement());
+        $this->assertEquals(StatementType::MANY_T, $simpleObj->getStatement()->type);
+        $this->assertInstanceOf(Statement::class, $simpleObj->getStatement()->value);
+        $this->assertEquals(SimpleTestModel::class, $simpleObj->getStatement()->value->value);
     }
 }

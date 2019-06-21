@@ -36,7 +36,7 @@ class Reader
                 $type,
                 $type ? $this->reader->isPrimitive($type) : null
             );
-            $properties[$property->name] = $property;
+            $properties[$property->getName()] = $property;
         }
 
         return $properties;

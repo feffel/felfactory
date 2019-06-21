@@ -17,40 +17,98 @@ class Property
     }
 
     /** @var string */
-    public $name;
+    private $name;
 
     /** @var ?string */
-    public $type;
+    private $type;
 
     /** @var ReflectionProperty */
-    public $ref;
+    private $ref;
 
     /** @var Statement */
-    public $statement;
+    private $statement;
 
     /** @var ?callable */
-    public $callback;
+    private $callback;
 
     /** @var bool|null */
-    public $primitive;
+    private $primitive;
 
     /** @var bool|null */
-    protected $array;
+    private $array;
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type): void
+    {
+        $this->array = substr_compare($type, '[]', -2) === 0;
+        if ($this->array) {
+            $type = substr($type, 0, -2);
+        }
+        $this->type = $type;
+    }
+
+    public function getRef(): ReflectionProperty
+    {
+        return $this->ref;
+    }
+
+    public function getStatement(): ?Statement
+    {
+        return $this->statement;
+    }
+
+    public function setStatement(Statement $statement): void
+    {
+        $this->statement = $statement;
+    }
+
+    public function getCallback(): ?callable
+    {
+        return $this->callback;
+    }
+
+    public function setCallback(?callable $callback): void
+    {
+        $this->callback = $callback;
+    }
+
+    public function isPrimitive(): ?bool
+    {
+        return $this->primitive;
+    }
+
+    public function setPrimitive(?bool $primitive): void
+    {
+        $this->primitive = $primitive;
+    }
 
     public function isArray(): bool
     {
-        // @TODO ADD getters and setters and handle this better
-        if ($this->array !== null) {
-            return $this->array;
-        }
-        if ($this->type === null) {
-            return false;
-        }
-        $this->array = substr_compare($this->type, '[]', -2) === 0;
-        if ($this->array) {
-            $this->type = substr($this->type, 0, -2);
-        }
+        return $this->array ?? false;
+    }
 
-        return $this->array;
+    public function isConfigured(): bool
+    {
+        return $this->statement !== null;
     }
 }
