@@ -72,9 +72,14 @@ class Property
         return $this->ref;
     }
 
-    public function getStatement(): ?Statement
+    public function getStatement(): Statement
     {
         return $this->statement;
+    }
+
+    public function hasStatement(): bool
+    {
+        return $this->statement !== null;
     }
 
     public function setStatement(Statement $statement): void

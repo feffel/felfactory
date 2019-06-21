@@ -29,6 +29,8 @@ class GuesserTest extends TestCase
         $firstName      = new Property($ref->getProperty('firstName'));
         $lastName       = new Property($ref->getProperty('lastName'));
         $age            = new Property($ref->getProperty('age'));
+        $firstName->setPrimitive(true);
+        $lastName->setPrimitive(true);
         $age->setStatement(new Statement());
         // TEST
         $guesser->guessMissing([$firstName, $lastName, $age]);

@@ -29,23 +29,33 @@ class Guesser
     public function guessMissing(array $properties): void
     {
         foreach ($properties as $property) {
-            if ($property->isPrimitive() === true || $property->getType() === null) {
+            if ($property->isPrimitive() === true) {
                 // @TODO add a statement ya baba
-                $property->setCallback($this->guessPrimitive($property));
-            } elseif ($property->isPrimitive() === false) {
-                // @TODO pull up for primitive array support
-                if ($property->isArray()) {
-                    $innerStatement = $this->statementFactory->makeClass($property->getType());
-                    $property->setStatement($this->statementFactory->makeMany($innerStatement, 1, 3));
-                } else {
-                    $property->setStatement($this->statementFactory->makeClass($property->getType()));
-                }
+                $this->guessPrimitive($property);
+            } else {
+                $this->guessObject($property);
+            }
+            if ($property->isArray()) {
+                $this->wrapInMany($property);
             }
         }
     }
 
-    protected function guessPrimitive(Property $property): ?callable
+    protected function guessObject(Property $property): void
     {
-        return $this->nameGuesser->guessFormat($property->getName());
+        // @TODO handle php objects
+        if ($property->getType() !== null) {
+            $property->setStatement($this->statementFactory->makeClass($property->getType()));
+        }
+    }
+
+    protected function wrapInMany(Property $property): void
+    {
+        $property->setStatement($this->statementFactory->makeMany($property->getStatement(), 1, 3));
+    }
+
+    protected function guessPrimitive(Property $property): void
+    {
+        $property->setCallback($this->nameGuesser->guessFormat($property->getName()));
     }
 }

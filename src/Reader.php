@@ -34,7 +34,7 @@ class Reader
             $property                    = new Property(
                 $reflectionProperty,
                 $type,
-                $type ? $this->reader->isPrimitive($type) : null
+                $type ? $this->reader->isPrimitive($type) : true
             );
             $properties[$property->getName()] = $property;
         }

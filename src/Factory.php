@@ -9,6 +9,7 @@ use felfactory\Guesser\Guesser;
 use felfactory\Models\Property;
 use felfactory\Statement\StatementExecutor;
 use InvalidArgumentException;
+use ReflectionClass;
 use ReflectionException;
 
 /**
@@ -54,8 +55,8 @@ class Factory
         );
         $this->guesser->guessMissing($missingProperties);
         foreach ($properties as $property) {
-            if (($statement = $property->getStatement()) !== null) {
-                $property->setCallback($this->executor->execute($statement));
+            if ($property->hasStatement()) {
+                $property->setCallback($this->executor->execute($property->getStatement()));
             }
         }
         return $properties;
@@ -85,7 +86,7 @@ class Factory
             throw  new InvalidArgumentException("Couldn't load $className");
         }
         $config = $this->configure($className);
-        $class  = new \ReflectionClass($className);
+        $class  = new ReflectionClass($className);
         $obj    = $class->newInstance();
         foreach ($config as $property) {
             $val = $this->evaluateCallback($property->getCallback());
