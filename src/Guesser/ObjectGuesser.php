@@ -12,24 +12,25 @@ class ObjectGuesser
     /** @var StatementFactory */
     protected $statementFactory;
 
-    protected const FAMOUS_CLASSES
-        = [
-            'DateTime' => ['factory' => 'makeGenerate', 'args' => ['datetime']],
-        ];
+    protected static $FAMOUS_CLASSES = [];
 
     public function __construct()
     {
         $this->statementFactory = new StatementFactory();
+        if (empty(self::$FAMOUS_CLASSES)) {
+            self::$FAMOUS_CLASSES = require __DIR__.'/FamousObjects/famous.php';
+        }
     }
 
     protected function isFamous(string $class): bool
     {
-        return array_key_exists($class, self::FAMOUS_CLASSES);
+        return array_key_exists($class, self::$FAMOUS_CLASSES);
     }
 
     protected function getPreparedStatement(string $class): Statement
     {
-        $prep = self::FAMOUS_CLASSES[$class];
+        $prep = self::$FAMOUS_CLASSES[$class];
+
         return $this->statementFactory->{$prep['factory']}(...$prep['args']);
     }
 
