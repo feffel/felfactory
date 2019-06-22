@@ -10,10 +10,10 @@ class Property
 {
     public function __construct(ReflectionProperty $refProperty, ?string $type = null, ?bool $primitive = false)
     {
-        $this->name      = $refProperty->getName();
-        $this->ref       = $refProperty;
-        $this->type      = $type;
-        $this->primitive = $primitive;
+        $this->ref = $refProperty;
+        $this->setName($refProperty->getName());
+        $type ? $this->setType($type) : null;
+        $this->setPrimitive($primitive);
     }
 
     /** @var string */

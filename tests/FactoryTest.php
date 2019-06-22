@@ -6,6 +6,7 @@ namespace felfactory\tests;
 use felfactory\Config\ConfigLoader;
 use felfactory\Factory;
 use felfactory\tests\TestModels\EmptyTestModel;
+use felfactory\tests\TestModels\GuessArraysTestModel;
 use felfactory\tests\TestModels\NestedTestModel;
 use felfactory\tests\TestModels\SimpleTestModel;
 use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
@@ -81,6 +82,20 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(SimpleTestModel::class, $obj->simpleObj);
         $this->assertIsString($obj->simpleObj->firstName);
         $this->assertIsString($obj->address);
+    }
+
+    public function testArraysModel(): void
+    {
+        // SETUP
+        $factory = new Factory();
+        // TEST
+        $obj = $factory->generate(GuessArraysTestModel::class);
+        // ASSERT
+        $this->assertIsArray($obj->getCool());
+        $this->assertIsArray($obj->getNames());
+        $this->assertIsArray($obj->getObjects());
+        $this->assertIsArray($obj->getPhoneNumbers());
+        $this->assertIsArray($obj->getWhatMate());
     }
 
     protected function tearDown(): void
