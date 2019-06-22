@@ -9,6 +9,7 @@ use felfactory\tests\ReflectionHelper;
 use felfactory\tests\TestModels\NestedTestModel;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * Class PrimitiveGuesserTest
@@ -24,18 +25,67 @@ class PrimitiveGuesserTest extends TestCase
         ReflectionHelper::set(PrimitiveGuesser::class, 'TYPES', []);
     }
 
-    public function testGuessFromName(): void
+    public function nameProvider(): array
+    {
+        return [
+            ['CoolAddressMan', 'address'],
+            ['boolean', 'boolean'],
+            ['name_first', 'firstName'],
+            ['AddressMac', 'macAddress'],
+            ['countryOfOrigin', 'country'],
+            ['workEmail', 'email'],
+        ];
+    }
+
+    /**
+     * @dataProvider nameProvider
+     * @param $name
+     * @param $guess
+     * @throws ReflectionException
+     */
+    public function testGuessFromName($name, $guess): void
     {
         // SETUP
         $guesser = new PrimitiveGuesser();
         $ref     = new ReflectionClass(NestedTestModel::class);
-        $address = new Property($ref->getProperty('address'));
-        $address->setPrimitive(false);
-        $address->setName('lol');
-        $address->setType('wtf');
+        $prop = new Property($ref->getProperty('address'));
+        $prop->setName($name);
         // TEST
-        $guesser->guess($address);
+        $guesser->guess($prop);
         // ASSERT
-        $this->assertTrue($address->hasStatement());
+        $this->assertTrue($prop->hasStatement());
+        $this->assertEquals($guess, $prop->getStatement()->value);
+    }
+
+    public function typeProvider(): array
+    {
+        return [
+            ['str', 'sentence'],
+            ['bool', 'boolean'],
+            ['int', 'randomNumber'],
+            ['array', 'words'],
+            ['meh', 'word'],
+        ];
+    }
+
+    /**
+     * @dataProvider typeProvider
+     * @param $type
+     * @param $guess
+     * @throws ReflectionException
+     */
+    public function testGuessFromType($type, $guess): void
+    {
+        // SETUP
+        $guesser = new PrimitiveGuesser();
+        $ref     = new ReflectionClass(NestedTestModel::class);
+        $prop = new Property($ref->getProperty('address'));
+        $prop->setName('undefined');
+        $prop->setType($type);
+        // TEST
+        $guesser->guess($prop);
+        // ASSERT
+        $this->assertTrue($prop->hasStatement());
+        $this->assertEquals($guess, $prop->getStatement()->value);
     }
 }

@@ -20,6 +20,7 @@
             <directory suffix=".php">src/</directory>
             <exclude>
                 <file>src/PhpDocReader.php</file>
+                <directory suffix=".php">src/Guesser/types/</directory>
             </exclude>
         </whitelist>
     </filter>
