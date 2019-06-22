@@ -28,7 +28,7 @@ class Property
     /** @var Statement */
     private $statement;
 
-    /** @var ?callable */
+    /** @var callable */
     private $callback;
 
     /** @var bool|null */
@@ -87,12 +87,12 @@ class Property
         $this->statement = $statement;
     }
 
-    public function getCallback(): ?callable
+    public function getCallback(): callable
     {
         return $this->callback;
     }
 
-    public function setCallback(?callable $callback): void
+    public function setCallback(callable $callback): void
     {
         $this->callback = $callback;
     }
