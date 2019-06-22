@@ -5,8 +5,10 @@ namespace felfactory\tests\Guesser;
 
 use DateTime;
 use felfactory\Guesser\ObjectGuesser;
+use felfactory\Guesser\PrimitiveGuesser;
 use felfactory\Models\Property;
 use felfactory\Statement\StatementType;
+use felfactory\tests\ReflectionHelper;
 use felfactory\tests\TestModels\NestedTestModel;
 use felfactory\tests\TestModels\SimpleTestModel;
 use PHPUnit\Framework\TestCase;
@@ -20,6 +22,10 @@ use ReflectionClass;
  */
 class ObjectGuesserTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        ReflectionHelper::set(ObjectGuesser::class, 'FAMOUS_CLASSES', []);
+    }
 
     public function testNullType(): void
     {

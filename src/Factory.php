@@ -34,7 +34,7 @@ class Factory
     {
         $this->configurator = new Configurator();
         $this->generator    = $generator ?? \Faker\Factory::create();
-        $this->guesser      = new Guesser($this->generator);
+        $this->guesser      = new Guesser();
         $this->executor     = new StatementExecutor($this->generator, [$this, 'generate']);
     }
 
@@ -56,19 +56,6 @@ class Factory
     }
 
     /**
-     * @param callable|null $callback
-     * @return mixed|null
-     */
-    protected function evaluateCallback(?callable $callback)
-    {
-        if ($callback) {
-            return $callback();
-        }
-
-        return null;
-    }
-
-    /**
      * @param string $className
      * @return object
      * @throws ReflectionException
@@ -82,7 +69,7 @@ class Factory
         $class  = new ReflectionClass($className);
         $obj    = $class->newInstance();
         foreach ($config as $property) {
-            $val = $this->evaluateCallback($property->getCallback());
+            $val = $property->getCallback()();
             $property->getRef()->setValue($obj, $val);
         }
 

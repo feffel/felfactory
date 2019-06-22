@@ -18,7 +18,7 @@ class ObjectGuesser
     {
         $this->statementFactory = new StatementFactory();
         if (empty(self::$FAMOUS_CLASSES)) {
-            self::$FAMOUS_CLASSES = require __DIR__.'/FamousObjects/famous.php';
+            self::$FAMOUS_CLASSES = require __DIR__.'/types/famous.php';
         }
     }
 

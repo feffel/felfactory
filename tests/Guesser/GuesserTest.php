@@ -24,7 +24,7 @@ class GuesserTest extends TestCase
     public function testAllMissingFilled(): void
     {
         // SETUP
-        $guesser   = new Guesser(\Faker\Factory::create());
+        $guesser   = new Guesser();
         $ref       = new ReflectionClass(SimpleTestModelPhpConfig::class);
         $firstName = new Property($ref->getProperty('firstName'));
         $lastName  = new Property($ref->getProperty('lastName'));
@@ -36,16 +36,15 @@ class GuesserTest extends TestCase
         // TEST
         $guesser->guessMissing([$firstName, $lastName, $age]);
         // ASSERT
-        $this->assertIsCallable($firstName->getCallback());
-        $this->assertIsCallable($lastName->getCallback());
-        $this->assertNull($age->getCallback());
+        $this->assertTrue($firstName->hasStatement());
+        $this->assertTrue($lastName->hasStatement());
         $this->assertSame($preConf, $age->getStatement());
     }
 
     public function testGuessArrayOfObjects(): void
     {
         // SETUP
-        $guesser   = new Guesser(\Faker\Factory::create());
+        $guesser   = new Guesser();
         $ref       = new ReflectionClass(NestedTestModel::class);
         $simpleObj = new Property($ref->getProperty('simpleObj'));
         $simpleObj->setPrimitive(false);
@@ -53,6 +52,7 @@ class GuesserTest extends TestCase
         // TEST
         $guesser->guessMissing([$simpleObj]);
         // ASSERT
+        $this->assertTrue($simpleObj->hasStatement());
         $this->assertEquals(StatementType::MANY_T, $simpleObj->getStatement()->type);
         $this->assertInstanceOf(Statement::class, $simpleObj->getStatement()->value);
         $this->assertEquals(SimpleTestModel::class, $simpleObj->getStatement()->value->value);

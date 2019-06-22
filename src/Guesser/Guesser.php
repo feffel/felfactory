@@ -19,10 +19,10 @@ class Guesser
     protected $statementFactory;
 
 
-    public function __construct(Generator $generator)
+    public function __construct()
     {
         $this->objectGuesser    = new ObjectGuesser();
-        $this->primitiveGuesser = new PrimitiveGuesser($generator);
+        $this->primitiveGuesser = new PrimitiveGuesser();
         $this->statementFactory = new StatementFactory();
     }
 
@@ -32,9 +32,10 @@ class Guesser
     public function guessMissing(array $properties): void
     {
         foreach ($properties as $property) {
-            if (!$property->isConfigured()) {
-                $this->guess($property);
+            if ($property->isConfigured()) {
+                continue;
             }
+            $this->guess($property);
             if ($property->isArray()) {
                 $this->wrapInMany($property);
             }
@@ -44,7 +45,6 @@ class Guesser
     public function guess(Property $property): void
     {
         if ($property->isPrimitive() === true) {
-            // @TODO add a statement ya baba
             $this->primitiveGuesser->guess($property);
         } else {
             $this->objectGuesser->guess($property);
