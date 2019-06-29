@@ -8,6 +8,7 @@ use felfactory\Factory;
 use felfactory\tests\TestModels\EmptyTestModel;
 use felfactory\tests\TestModels\GuessArraysTestModel;
 use felfactory\tests\TestModels\NestedTestModel;
+use felfactory\tests\TestModels\SelfNestedModel;
 use felfactory\tests\TestModels\SimpleTestModel;
 use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
 use InvalidArgumentException;
@@ -82,6 +83,20 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(SimpleTestModel::class, $obj->simpleObj);
         $this->assertIsString($obj->simpleObj->firstName);
         $this->assertIsString($obj->address);
+    }
+
+    public function testSelfNestedModel(): void
+    {
+        // SETUP
+        $factory = new Factory();
+        // TEST
+        $obj = $factory->generate(SelfNestedModel::class);
+        // ASSERT
+        $this->assertInstanceOf(SelfNestedModel::class, $obj);
+        $this->assertInstanceOf(SelfNestedModel::class, $obj->parent);
+        $this->assertNull($obj->parent->parent);
+        $this->assertIsString($obj->name);
+        $this->assertIsString($obj->parent->name);
     }
 
     public function testArraysModel(): void

@@ -29,6 +29,8 @@ class Factory
     protected $guesser;
     /** @var StatementExecutor */
     protected $executor;
+    /** @var GenerationStack */
+    protected $stack;
 
     public function __construct(Generator $generator = null)
     {
@@ -36,6 +38,7 @@ class Factory
         $this->generator    = $generator ?? \Faker\Factory::create();
         $this->guesser      = new Guesser();
         $this->executor     = new StatementExecutor($this->generator, [$this, 'generate']);
+        $this->stack        = new GenerationStack();
     }
 
     /**
@@ -57,13 +60,18 @@ class Factory
 
     /**
      * @param string $className
-     * @return object
+     * @return object|null
      * @throws ReflectionException
      */
     public function generate(string $className)
     {
         if (!class_exists($className)) {
             throw  new InvalidArgumentException("Couldn't load $className");
+        }
+        $this->stack->push($className);
+        if (!$this->stack->valid()) {
+            $this->stack->pop();
+            return null;
         }
         $config = $this->configure($className);
         $class  = new ReflectionClass($className);
@@ -72,7 +80,7 @@ class Factory
             $val = $property->getCallback()();
             $property->getRef()->setValue($obj, $val);
         }
-
+        $this->stack->pop();
         return $obj;
     }
 }
