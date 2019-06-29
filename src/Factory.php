@@ -66,16 +66,24 @@ class Factory
     public function generate(string $className)
     {
         if (!class_exists($className)) {
-            throw  new InvalidArgumentException("Couldn't load $className");
+            if ($this->stack->isEmpty()) {
+                throw  new InvalidArgumentException("Couldn't load $className");
+            }
+            $this->stack->pop();
+            return null;
         }
         $this->stack->push($className);
         if (!$this->stack->valid()) {
             $this->stack->pop();
             return null;
         }
-        $config = $this->configure($className);
         $class  = new ReflectionClass($className);
-        $obj    = $class->newInstance();
+        if ($class->isAbstract() || $class->isInterface() || $class->isTrait()) {
+            $this->stack->pop();
+            return null;
+        }
+        $config = $this->configure($className);
+        $obj    = $class->newInstanceWithoutConstructor();
         foreach ($config as $property) {
             $val = $property->getCallback()();
             $property->getRef()->setValue($obj, $val);

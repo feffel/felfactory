@@ -5,12 +5,16 @@ namespace felfactory\tests;
 
 use felfactory\Config\ConfigLoader;
 use felfactory\Factory;
+use felfactory\tests\TestModels\AbstractFieldsModel;
+use felfactory\tests\TestModels\AbstractModel;
 use felfactory\tests\TestModels\EmptyTestModel;
 use felfactory\tests\TestModels\GuessArraysTestModel;
 use felfactory\tests\TestModels\NestedTestModel;
 use felfactory\tests\TestModels\SelfNestedModel;
+use felfactory\tests\TestModels\SimpleInterface;
 use felfactory\tests\TestModels\SimpleTestModel;
 use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
+use felfactory\tests\TestModels\SimpleTrait;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -38,6 +42,18 @@ class FactoryTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         // TEST
         $factory->generate('EmptyTestModel');
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
+    }
+
+    public function testInterfaceArgument(): void
+    {
+        // SETUP
+        $factory = new Factory();
+        // ASSERT
+        $this->expectException(InvalidArgumentException::class);
+        // TEST
+        $factory->generate(SimpleInterface::class);
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 
     public function testEmptyModel(): void
@@ -48,6 +64,7 @@ class FactoryTest extends TestCase
         $obj = $factory->generate(EmptyTestModel::class);
         // ASSERT
         $this->assertInstanceOf(EmptyTestModel::class, $obj);
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 
     public function testSimpleModel(): void
@@ -59,6 +76,7 @@ class FactoryTest extends TestCase
         // ASSERT
         $this->assertInstanceOf(SimpleTestModel::class, $obj);
         $this->assertIsString($obj->firstName);
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 
     public function testConfiguredModel(): void
@@ -70,6 +88,7 @@ class FactoryTest extends TestCase
         // ASSERT
         $this->assertInstanceOf(SimpleTestModelPhpConfig::class, $obj);
         $this->assertIsString($obj->firstName);
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 
     public function testNestedModel(): void
@@ -83,6 +102,7 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(SimpleTestModel::class, $obj->simpleObj);
         $this->assertIsString($obj->simpleObj->firstName);
         $this->assertIsString($obj->address);
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 
     public function testSelfNestedModel(): void
@@ -97,6 +117,20 @@ class FactoryTest extends TestCase
         $this->assertNull($obj->parent->parent);
         $this->assertIsString($obj->name);
         $this->assertIsString($obj->parent->name);
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
+    }
+
+    public function testNotInstantiableModels(): void
+    {
+        // SETUP
+        $factory = new Factory();
+        // TEST
+        $obj = $factory->generate(AbstractFieldsModel::class);
+        // ASSERT
+        $this->assertInstanceOf(AbstractFieldsModel::class, $obj);
+        $this->assertNull($obj->abstract);
+        $this->assertNull($obj->interface);
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 
     public function testArraysModel(): void
@@ -111,6 +145,7 @@ class FactoryTest extends TestCase
         $this->assertIsArray($obj->getObjects());
         $this->assertIsArray($obj->getPhoneNumbers());
         $this->assertIsArray($obj->getWhatMate());
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 
     protected function tearDown(): void
