@@ -19,7 +19,7 @@ class YamlLoaderTest extends TestCase
     {
         // SETUP
         $filePath = __DIR__.'/../TestModels/confs/conf.yaml';
-        putenv("YAML_FILE=$filePath");
+        putenv("FACTORY_YAML_FILE=$filePath");
         $loader = new YamlLoader();
         // TEST
         $configs = $loader->discover();
@@ -44,7 +44,7 @@ class YamlLoaderTest extends TestCase
     public function testEmptyOnInvalidConfig(string $filePath): void
     {
         // SETUP
-        putenv("YAML_FILE=$filePath");
+        putenv("FACTORY_YAML_FILE=$filePath");
         $loader = new YamlLoader();
         // TEST
         $configs = $loader->discover();

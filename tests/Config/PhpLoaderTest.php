@@ -19,7 +19,7 @@ class PhpLoaderTest extends TestCase
     {
         // SETUP
         $filePath = __DIR__.'/../TestModels/confs/conf.php';
-        putenv("CONFIG_FILE=$filePath");
+        putenv("FACTORY_PHP_FILE=$filePath");
         $loader = new PhpLoader();
         // TEST
         $configs = $loader->discover();
@@ -45,7 +45,7 @@ class PhpLoaderTest extends TestCase
     public function testEmptyOnInvalidConfig(string $filePath): void
     {
         // SETUP
-        putenv("CONFIG_FILE=$filePath");
+        putenv("FACTORY_PHP_FILE=$filePath");
         $loader = new PhpLoader();
         // TEST
         $configs = $loader->discover();

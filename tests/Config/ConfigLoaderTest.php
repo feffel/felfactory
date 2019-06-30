@@ -22,8 +22,8 @@ class ConfigLoaderTest extends TestCase
     {
         $phpFile  = __DIR__.'/../TestModels/confs/conf.php';
         $yamlFile = __DIR__.'/../TestModels/confs/conf.yaml';
-        putenv("CONFIG_FILE=$phpFile");
-        putenv("YAML_FILE=$yamlFile");
+        putenv("FACTORY_PHP_FILE=$phpFile");
+        putenv("FACTORY_YAML_FILE=$yamlFile");
     }
 
     public function testLoaderConfigs(): void
@@ -43,7 +43,7 @@ class ConfigLoaderTest extends TestCase
         // SETUP
         new ConfigLoader();
         putenv('ROOT_NAMESPACE');
-        putenv('CONFIG_FILE');
+        putenv('FACTORY_PHP_FILE');
         $loader = new ConfigLoader();
         // TEST
         $conf = $loader->load(SimpleTestModelPhpConfig::class);

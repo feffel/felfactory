@@ -7,11 +7,9 @@ use Spyc;
 
 class YamlLoader
 {
-    /** @deprecated  */
     protected function getFile(): string
     {
-        // @TODO Replace this with proper configs
-        return getenv('YAML_FILE') ?: '';
+        return getenv('FACTORY_YAML_FILE') ?: '';
     }
 
     public function discover(): array

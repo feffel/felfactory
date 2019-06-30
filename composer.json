@@ -2,7 +2,7 @@
     "name": "feffel/felfactory",
     "type": "library",
     "description": "",
-    "keywords": ["felfactory", "faker", "generation", "data", "fixtures"],
+    "keywords": ["felfactory", "fake", "dummy", "faker", "generation", "data", "fixtures"],
     "homepage": "https://github.com/feffel/felfactory",
     "license": "MIT",
     "authors": [
@@ -13,19 +13,13 @@
             "role": "Developer"
         }
     ],
-    "repositories": {
-        "php-di\\phpdoc-reader": {
-            "type": "vcs",
-            "url": "https://github.com/feffel/PhpDocReader",
-            "no-api" : true
-        }
-    },
     "require": {
         "php": ">=7.2",
         "doctrine/annotations": "^1.6",
         "doctrine/lexer": "^1.0",
         "fzaninotto/faker": "^1.8",
-        "mustangostang/spyc": "^0.6.2"
+        "mustangostang/spyc": "^0.6.2",
+        "symfony/dotenv": "^4.3"
     },
     "require-dev": {
         "mockery/mockery": "^1.2",
@@ -47,6 +41,7 @@
     },
     "scripts": {
         "test": "phpunit",
+        "check-type": "psalm src",
         "check-style": "phpcs src tests",
         "fix-style": "phpcbf src tests"
     },

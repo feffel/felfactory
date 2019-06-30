@@ -14,7 +14,6 @@ use felfactory\tests\TestModels\SelfNestedModel;
 use felfactory\tests\TestModels\SimpleInterface;
 use felfactory\tests\TestModels\SimpleTestModel;
 use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
-use felfactory\tests\TestModels\SimpleTrait;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
@@ -30,8 +29,8 @@ class FactoryTest extends TestCase
     {
         $phpFile  = __DIR__.'/TestModels/confs/conf.php';
         $yamlFile = __DIR__.'/TestModels/confs/conf.yaml';
-        putenv("CONFIG_FILE=$phpFile");
-        putenv("YAML_FILE=$yamlFile");
+        putenv("FACTORY_PHP_FILE=$phpFile");
+        putenv("FACTORY_YAML_FILE=$yamlFile");
     }
 
     public function testNonExistentClass(): void
@@ -108,6 +107,7 @@ class FactoryTest extends TestCase
     public function testSelfNestedModel(): void
     {
         // SETUP
+        putenv('FACTORY_CIRCLE_TOLERANCE=2');
         $factory = new Factory();
         // TEST
         $obj = $factory->generate(SelfNestedModel::class);
@@ -118,6 +118,7 @@ class FactoryTest extends TestCase
         $this->assertIsString($obj->name);
         $this->assertIsString($obj->parent->name);
         $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
+        putenv('FACTORY_CIRCLE_TOLERANCE=');
     }
 
     public function testNotInstantiableModels(): void

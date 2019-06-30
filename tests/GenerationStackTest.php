@@ -29,6 +29,8 @@ class GenerationStackTest extends TestCase
     public function testCircularReferenceAllowance(): void
     {
         // SETUP
+        putenv('FACTORY_CIRCLE_TOLERANCE=3');
+        putenv('FACTORY_MAX_NEST_LEVEL=5');
         $stack = new GenerationStack();
         $stack->push('A');
         $stack->push('B');
@@ -38,6 +40,8 @@ class GenerationStackTest extends TestCase
         $valid = $stack->valid();
         // ASSERT
         $this->assertTrue($valid);
+        putenv('FACTORY_CIRCLE_TOLERANCE=');
+        putenv('FACTORY_MAX_NEST_LEVEL=');
     }
 
     public function testLongCircularReference(): void

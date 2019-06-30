@@ -5,11 +5,18 @@ namespace felfactory;
 
 class GenerationStack
 {
-    protected const CIRCLE_TOLERANCE = 2;
-    protected const MAX_NEST_LEVEL   = 10;
+
+    protected static $CIRCLE_TOLERANCE;
+    protected static $MAX_NEST_LEVEL;
 
     /** @var array */
     protected $stack = [];
+
+    public function __construct()
+    {
+        self::$CIRCLE_TOLERANCE = getenv('FACTORY_CIRCLE_TOLERANCE') ?: 1;
+        self::$MAX_NEST_LEVEL   = getenv('FACTORY_MAX_NEST_LEVEL') ?: 3;
+    }
 
     public function push(string $className): void
     {
@@ -23,8 +30,8 @@ class GenerationStack
 
     public function valid(): bool
     {
-        return count($this->stack) <= self::MAX_NEST_LEVEL
-            && max(array_count_values($this->stack)) <= self::CIRCLE_TOLERANCE;
+        return count($this->stack) <= self::$MAX_NEST_LEVEL
+            && max(array_count_values($this->stack)) <= self::$CIRCLE_TOLERANCE;
     }
 
     public function isEmpty(): bool

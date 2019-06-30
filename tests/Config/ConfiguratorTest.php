@@ -26,8 +26,8 @@ class ConfiguratorTest extends TestCase
     {
         $phpFile  = __DIR__.'/../TestModels/confs/conf.php';
         $yamlFile = __DIR__.'/../TestModels/confs/conf.yaml';
-        putenv("CONFIG_FILE=$phpFile");
-        putenv("YAML_FILE=$yamlFile");
+        putenv("FACTORY_PHP_FILE=$phpFile");
+        putenv("FACTORY_YAML_FILE=$yamlFile");
     }
 
     public function testNonExistentClass(): void

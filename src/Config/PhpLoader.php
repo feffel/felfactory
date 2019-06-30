@@ -5,11 +5,9 @@ namespace felfactory\Config;
 
 class PhpLoader
 {
-    /** @deprecated */
     protected function getFile(): string
     {
-        // @TODO Replace this with proper configs
-        return getenv('CONFIG_FILE') ?: '';
+        return getenv('FACTORY_PHP_FILE') ?: '';
     }
 
     /**

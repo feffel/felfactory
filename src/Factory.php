@@ -34,6 +34,7 @@ class Factory
 
     public function __construct(Generator $generator = null)
     {
+        EnvLoader::load();
         $this->configurator = new Configurator();
         $this->generator    = $generator ?? \Faker\Factory::create();
         $this->guesser      = new Guesser();
