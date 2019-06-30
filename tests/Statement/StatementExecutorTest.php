@@ -93,6 +93,20 @@ class StatementExecutorTest extends TestCase
         $this->assertNotEquals($call(), $call());
     }
 
+    public function testNullStatement(): void
+    {
+        // SETUP
+        $executor              = $this->getExecutor();
+        $statement             = new Statement();
+        $statement->type       = StatementType::NULL_T;
+        // TEST
+        $call   = $executor->execute($statement);
+        $result = $call();
+        // ASSERT
+        $this->assertIsCallable($call);
+        $this->assertNull($result);
+    }
+
     public function testErrorOnUndefinedType(): void
     {
         // SETUP

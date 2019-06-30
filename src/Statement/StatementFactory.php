@@ -41,4 +41,12 @@ class StatementFactory
 
         return $statement;
     }
+
+    public function makeNull(): Statement
+    {
+        $statement       = new Statement();
+        $statement->type = StatementType::NULL_T;
+
+        return $statement;
+    }
 }

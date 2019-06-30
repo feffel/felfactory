@@ -65,6 +65,13 @@ class StatementExecutor
         };
     }
 
+    protected function executeNullStatement(): callable
+    {
+        return static function () {
+            return null;
+        };
+    }
+
     public function execute(Statement $statement): callable
     {
         $call = null;
@@ -80,6 +87,9 @@ class StatementExecutor
                 break;
             case StatementType::MANY_T:
                 $call = $this->executeManyStatement($statement);
+                break;
+            case StatementType::NULL_T:
+                $call = $this->executeNullStatement();
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('%s is not a valid StatementType', $statement->type));

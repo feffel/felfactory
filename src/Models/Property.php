@@ -60,7 +60,7 @@ class Property
      */
     public function setType($type): void
     {
-        $this->array = substr_compare($type, '[]', -2) === 0;
+        $this->array = $type && substr_compare($type, '[]', -2) === 0;
         if ($this->array) {
             $type = substr($type, 0, -2);
         }

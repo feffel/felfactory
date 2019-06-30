@@ -49,15 +49,19 @@ class PrimitiveGuesser
         return $this->statementFactory->{$prep['factory']}(...$prep['args']);
     }
 
-    protected function guessByType(string $type): Statement
+    protected function guessByType(?string $type): Statement
     {
+        if ($type === null) {
+            return $this->statementFactory->makeNull();
+        }
         $prep = $this->match(self::$TYPES, $type) ?: self::$TYPES['default'];
         return $this->statementFactory->{$prep['factory']}(...$prep['args']);
     }
 
     public function guess(Property $property): void
     {
-        $statement = $this->guessName($property->getName()) ?: $this->guessByType($property->getType());
+        $statement = $this->guessName($property->getName());
+        $statement = $statement ?: $this->guessByType($property->getType());
         $property->setStatement($statement);
     }
 }

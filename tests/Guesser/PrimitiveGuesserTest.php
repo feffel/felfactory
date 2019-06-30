@@ -65,6 +65,7 @@ class PrimitiveGuesserTest extends TestCase
             ['int', 'randomNumber'],
             ['array', 'words'],
             ['meh', 'word'],
+            [null, null],
         ];
     }
 

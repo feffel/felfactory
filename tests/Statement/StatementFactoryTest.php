@@ -64,4 +64,16 @@ class StatementFactoryTest extends TestCase
         $this->assertEquals($result->value, $inner);
         $this->assertEquals($result->args, ['from' => 1, 'to' => 3]);
     }
+
+    public function testMakeNull(): void
+    {
+        // SETUP
+        $factory = new StatementFactory();
+        // TEST
+        $result = $factory->makeNull();
+        // ASSERT
+        $this->assertEquals($result->type, StatementType::NULL_T);
+        $this->assertNull($result->value);
+        $this->assertNull($result->args);
+    }
 }
