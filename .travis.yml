@@ -1,8 +1,6 @@
 dist: trusty
 language: php
-env:
-    global:
-        - CC_TEST_REPORTER_ID=645ecdff29a40f351cdc725b83bd8fd5f88828be3994b01612d065fff0e06dd1
+
 php:
     - 7.2
     - 7.3
