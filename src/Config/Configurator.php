@@ -20,13 +20,14 @@ class Configurator
 
     /**
      * @param string $className
-     * @psalm-param class-string $className
+     * @param array  $userConfig
      * @return Property[]
+     * @psalm-param class-string $className
      */
-    public function configureProperties(string $className): array
+    public function configureProperties(string $className, array $userConfig = []): array
     {
         $properties = $this->reader->readProperties($className);
-        $config     = $this->configLoader->load($className);
+        $config     = array_merge($this->configLoader->load($className), $userConfig);
         foreach ($config as $propertyName => $propertyConfig) {
             $properties[$propertyName]->setStatement((new Parser($propertyConfig))->parse());
         }

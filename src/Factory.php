@@ -43,13 +43,16 @@ class Factory
     }
 
     /**
-     * @param string $className
+     * @param string   $className
+     * @param string[] $userConfig
+     *
      * @psalm-param class-string $className
+     * @psalm-param array<string, string> $userConfig
      * @return Property[]
      */
-    protected function configure(string $className): array
+    protected function configure(string $className, array $userConfig): array
     {
-        $properties = $this->configurator->configureProperties($className);
+        $properties = $this->configurator->configureProperties($className, $userConfig);
         $this->guesser->guessMissing($properties);
         foreach ($properties as $property) {
             if ($property->hasStatement()) {
@@ -61,10 +64,13 @@ class Factory
 
     /**
      * @param string $className
+     * @param array  $config
+     *
+     * @psalm-param array<string, string> $config
      * @return object|null
      * @throws ReflectionException
      */
-    public function generate(string $className)
+    public function generate(string $className, array $config = [])
     {
         if (!class_exists($className)) {
             if ($this->stack->isEmpty()) {
@@ -83,7 +89,7 @@ class Factory
             $this->stack->pop();
             return null;
         }
-        $config = $this->configure($className);
+        $config = $this->configure($className, $config);
         $obj    = $class->newInstanceWithoutConstructor();
         foreach ($config as $property) {
             $val = $property->getCallback()();

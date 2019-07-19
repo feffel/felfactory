@@ -105,7 +105,7 @@ class FactoryTest extends TestCase
         $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 
-    public function testNestedMode22l(): void
+    public function testAnnotatedModel(): void
     {
         // SETUP
         $factory = new Factory();
@@ -161,6 +161,21 @@ class FactoryTest extends TestCase
         $this->assertIsArray($obj->getObjects());
         $this->assertIsArray($obj->getPhoneNumbers());
         $this->assertIsArray($obj->getWhatMate());
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
+    }
+
+    public function testCustomConfig(): void
+    {
+        // SETUP
+        $factory = new Factory();
+        // TEST
+        $obj = $factory->generate(
+            SimpleAnnotatedModel::class,
+            ['firstName' => "value('\"felfel\"')", 'address' => "value('\"felfel\"')"]
+        );
+        // ASSERT
+        $this->assertEquals('felfel', $obj->firstName);
+        $this->assertEquals('felfel', $obj->address);
         $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 
