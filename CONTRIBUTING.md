@@ -9,6 +9,8 @@ We accept contributions via Pull Requests on [Github](https://github.com/feffel/
 
 - **[PSR-2 Coding Standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md)** - Check the code style with ``$ composer check-style`` and fix it with ``$ composer fix-style``.
 
+- **[Psalm type checking](https://psalm.dev/docs/annotating_code/typing_in_psalm/)** - Your patch won't be accepted if it doesn't pass psalm type checking, run ``$ composer check-type`` to check for errors.
+
 - **Add tests!** - Your patch won't be accepted if it doesn't have tests.
 
 - **Document any change in behaviour** - Make sure the `README.md` and any other relevant documentation are kept up-to-date.
