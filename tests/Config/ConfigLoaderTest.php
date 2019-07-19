@@ -84,7 +84,7 @@ class ConfigLoaderTest extends TestCase
         // TEST
         $conf = $loader->load(SimpleAnnotatedModel::class);
         // ASSERT
-        $this->assertEquals(['firstName', 'lastName', 'age'], array_keys($conf));
+        $this->assertEquals(['firstName', 'lastName', 'address', 'phoneNos'], array_keys($conf));
     }
 
     protected function tearDown(): void

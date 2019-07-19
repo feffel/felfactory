@@ -6,11 +6,12 @@ namespace felfactory\tests;
 use felfactory\Config\ConfigLoader;
 use felfactory\Factory;
 use felfactory\tests\TestModels\AbstractFieldsModel;
-use felfactory\tests\TestModels\AbstractModel;
 use felfactory\tests\TestModels\EmptyTestModel;
 use felfactory\tests\TestModels\GuessArraysTestModel;
 use felfactory\tests\TestModels\NestedTestModel;
 use felfactory\tests\TestModels\SelfNestedModel;
+use felfactory\tests\TestModels\SimpleAddressModel;
+use felfactory\tests\TestModels\SimpleAnnotatedModel;
 use felfactory\tests\TestModels\SimpleInterface;
 use felfactory\tests\TestModels\SimpleTestModel;
 use felfactory\tests\TestModels\SimpleTestModelPhpConfig;
@@ -101,6 +102,20 @@ class FactoryTest extends TestCase
         $this->assertInstanceOf(SimpleTestModel::class, $obj->simpleObj);
         $this->assertIsString($obj->simpleObj->firstName);
         $this->assertIsString($obj->address);
+        $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
+    }
+
+    public function testNestedMode22l(): void
+    {
+        // SETUP
+        $factory = new Factory();
+        // TEST
+        $obj = $factory->generate(SimpleAnnotatedModel::class);
+        // ASSERT
+        $this->assertInstanceOf(SimpleAnnotatedModel::class, $obj);
+        $this->assertInstanceOf(SimpleAddressModel::class, $obj->address);
+        $this->assertIsString($obj->firstName);
+        $this->assertIsString($obj->address->building);
         $this->assertTrue(ReflectionHelper::get($factory, 'stack')->isEmpty());
     }
 

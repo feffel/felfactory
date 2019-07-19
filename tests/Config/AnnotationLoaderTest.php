@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace felfactory\tests;
 
 use felfactory\Config\AnnotationLoader;
+use felfactory\tests\TestModels\SimpleAddressModel;
 use felfactory\tests\TestModels\SimpleAnnotatedModel;
 use felfactory\tests\TestModels\SimpleInvalidAnnotationTestModel;
 use felfactory\tests\TestModels\SimpleTestModel;
@@ -12,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class AnnotationLoaderTest
  *
- * @covers \felfactory\Config\AnnotationLoader
+ * @covers  \felfactory\Config\AnnotationLoader
  * @package felfactory\tests
  */
 class AnnotationLoaderTest extends TestCase
@@ -27,8 +28,9 @@ class AnnotationLoaderTest extends TestCase
         $this->assertEquals(
             [
                 'firstName' => "generate('firstName')",
-                'lastName'  => "generate('lastName')",
-                'age'       => "generate('numberBetween(18, 59)')",
+                'lastName'  => "value('\"felfel\"')",
+                'address'   => sprintf('class(%s)', SimpleAddressModel::class),
+                'phoneNos'  => "many(generate('phoneNumber'), 0, 3)",
             ],
             $config
         );

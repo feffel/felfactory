@@ -35,8 +35,8 @@ class AnnotationLoader
         foreach ($properties as $property) {
             /** @var Figure|null $figure */
             $figure = $this->reader->getPropertyAnnotation($property, Figure::class);
-            if ($figure && $figure->figure) {
-                $config[$property->getName()] = $figure->figure;
+            if ($figure && $figure->isConfigured()) {
+                $config[$property->getName()] = $figure->stringify();
             }
         }
 

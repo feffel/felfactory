@@ -3,25 +3,27 @@ declare(strict_types=1);
 
 namespace felfactory\tests\TestModels;
 
-use felfactory\Annotation as Factory;
+use felfactory\Annotation as FCT;
 
 class SimpleAnnotatedModel
 {
     /**
-     * @Factory\Figure("generate('firstName')")
-     * @var string
+     * @FCT\Generate("firstName")
      */
     public $firstName;
 
     /**
-     * @Factory\Figure("generate('lastName')")
-     * @var string
+     * @FCT\Value("""felfel""")
      */
     protected $lastName;
 
     /**
-     * @Factory\Figure("generate('numberBetween(18, 59)')")
-     * @var int
+     * @FCT\ObjectOf(SimpleAddressModel::class)
      */
-    private $age;
+    public $address;
+
+    /**
+     * @FCT\ManyOf(@FCT\Generate("phoneNumber"))
+     */
+    public $phoneNos;
 }

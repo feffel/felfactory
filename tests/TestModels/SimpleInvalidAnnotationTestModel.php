@@ -3,24 +3,24 @@ declare(strict_types=1);
 
 namespace felfactory\tests\TestModels;
 
-use felfactory\Annotation as Factory;
+use felfactory\Annotation as FCT;
 
 class SimpleInvalidAnnotationTestModel
 {
     /**
-     * @Factory\Figure()
+     * @FCT\Generate()
      * @var string
      */
     public $firstName;
 
     /**
-     * @Factory\Figure()
+     * @FCT\ObjectOf()
      * @var string
      */
     protected $lastName;
 
     /**
-     * @Factory\Figure()
+     * @FCT\ManyOf()
      * @var int
      */
     private $age;
